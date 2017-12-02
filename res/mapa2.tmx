@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="20" tilewidth="32" tileheight="32" nextobjectid="42">
+ <tileset firstgid="1" name="tiles32" tilewidth="32" tileheight="32" tilecount="98" columns="14">
+  <image source="tiles32.png" width="448" height="224"/>
+ </tileset>
+ <layer name="PatronesFondo" width="500" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMBKGL+P3TDJZDwVVTVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/AYwTNbU=
+  </data>
+ </layer>
+ <layer name="PatronesTerreno" width="500" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt2lsGgEAAhtFIC0g7af+LSzRkzE0zUZzD9xCZ11+XaQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoNcSBQD8z5YIAPimp8/f+631KlynhHsAgLHOHQ/P3j3v1Fu22p4DwHj3Le/ddHsOAO+J/2kLpb6NlzY9d06uuTEAoK6026VGnXO2FgIA6uw5APzfAYlACQg=
+  </data>
+ </layer>
+ <objectgroup name="Suelos">
+  <object id="1" x="2" y="543">
+   <polyline points="0,0 220,1 221,-32 253,-30 254,-63 285,-63 285,-95 350,-93 350,-62 379,-61 380,-41 411,-31 413,-1 445,-2 446,93"/>
+  </object>
+  <object id="2" x="479" y="382">
+   <polyline points="0,0 2,61 159,62 159,35 130,35 128,1 2,0"/>
+  </object>
+  <object id="3" x="576" y="637">
+   <polyline points="0,0 1,-95 477,-95 478,1"/>
+  </object>
+  <object id="17" x="0" y="544">
+   <polyline points="0,0 2,-543 1215,-539"/>
+  </object>
+  <object id="31" x="833.333" y="538.667">
+   <polyline points="0,0 -1.33333,-93.3333 57.3333,-92 65.3333,2.66667 284,6.66667 285.333,-86.6667 353.333,-93.3333 350.667,4 444,2.66667 446.667,98.6667"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Monedas">
+  <object id="12" x="243" y="327" width="40" height="40"/>
+  <object id="13" x="375" y="373" width="40" height="40"/>
+  <object id="14" x="523" y="307" width="40" height="40"/>
+  <object id="15" x="684" y="443" width="40" height="40"/>
+ </objectgroup>
+ <objectgroup name="Enemigos">
+  <object id="21" x="689" y="492" width="40" height="40"/>
+  <object id="22" x="979" y="484" width="40" height="40"/>
+ </objectgroup>
+ <objectgroup name="Contenedores">
+  <object id="34" x="478.667" y="378.667">
+   <polyline points="0,0 0,-93.3333"/>
+  </object>
+  <object id="35" x="606.667" y="382.667">
+   <polyline points="0,0 2.66667,-108"/>
+  </object>
+  <object id="40" x="578.667" y="545.333">
+   <polyline points="0,0 0,-84"/>
+  </object>
+  <object id="41" x="350.667" y="456">
+   <polyline points="0,0 2.66667,-105.333"/>
+  </object>
+ </objectgroup>
+</map>
