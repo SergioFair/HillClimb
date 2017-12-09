@@ -81,7 +81,6 @@ ctor:function (space, posicion, layer) {
     this.sprite = new cc.PhysicsSprite("#playeridleright_01.png");
     // Cuerpo dinamico, SI le afectan las fuerzas
 
-
     this.body = new cp.Body(1, Infinity);
     this.body.setPos(posicion);
     //body.w_limit = 0.02;

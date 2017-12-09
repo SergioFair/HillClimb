@@ -23,6 +23,7 @@ var GameLayer = cc.Layer.extend({
     teclaArriba:false,
     teclaBarra:false,
     monedas:[],
+    gasolina:[],
     jugador: null,
     coche:null,
     space:null,
@@ -42,7 +43,6 @@ var GameLayer = cc.Layer.extend({
         cc.spriteFrameCache.addSpriteFrames(res.playershootright_plist);
         cc.spriteFrameCache.addSpriteFrames(res.orc_car_plist);
 
-
         // Inicializar Space
         this.space = new cp.Space();
         this.space.gravity = cp.v(0, -350);
@@ -55,7 +55,6 @@ var GameLayer = cc.Layer.extend({
         // IMPORTANTE: Invocamos el método antes de resolver la colisión (realmente no habrá colisión).
         this.space.addCollisionHandler(tipoJugador, tipoMoneda,
               null, this.colisionJugadorConMoneda.bind(this), null, null);
-
 
         this.jugador = new Jugador(this.space,
                cc.p(25,250), this);
@@ -93,11 +92,8 @@ var GameLayer = cc.Layer.extend({
       // IMPORTANTE: Invocamos el método antes de resolver la colisión (realmente no habrá colisión).
       this.space.addCollisionHandler(tipoDisparo, tipoSuelo,
            null, this.colisionDisparoConSuelo.bind(this), null, null);
-
-
-
-
        return true;
+
 },update:function (dt) {
      this.space.step(dt);
 
@@ -108,8 +104,6 @@ var GameLayer = cc.Layer.extend({
         nivelActual = nivelActual + 1;
         cc.director.runScene(new GameScene());
      }
-
-
 
       // Mover enemigos:
        for(var i = 0; i < this.enemigos.length; i++) {
@@ -143,6 +137,13 @@ var GameLayer = cc.Layer.extend({
                  this.disparos.splice(r, 1);
              }
          }
+
+         for (var r = 0; r < this.gasolina.length; r++) {
+            if (this.gasolina[r].shape == shape) {
+                this.gasolina[r].eliminar();
+                this.gasolina.splice(r, 1);
+            }
+          }
      }
 
      this.formasEliminar = [];
@@ -249,6 +250,16 @@ var GameLayer = cc.Layer.extend({
            this.monedas.push(moneda);
        }
 
+       var grupoGasolina = this.mapa.getObjectGroup("Gasolina");
+       var gasolinaArray = grupoGasolina.getObjects();
+       for (var i = 0; i < gasolinaArray.length; i++) {
+           var gas = new Gasoluna(this.space,
+               cc.p(gasolinaArray[i]["x"],gasolinaArray[i]["y"]),
+               this);
+
+           this.gasolina.push(gas);
+       }
+
        var grupoEnemigos = this.mapa.getObjectGroup("Enemigos");
        var enemigosArray = grupoEnemigos.getObjects();
        for (var i = 0; i < enemigosArray.length; i++) {
@@ -259,9 +270,6 @@ var GameLayer = cc.Layer.extend({
            this.enemigos.push(enemigo);
            console.log("Enemigo agregado");
        }
-
-
-
 
        var grupoContenedoresGirarDerecha = this.mapa.getObjectGroup("ContenedoresGirarDerecha");
        var contenedoresGirarDerechaArray = grupoContenedoresGirarDerecha.getObjects();
