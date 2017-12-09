@@ -47,6 +47,7 @@ var res = {
     wheel_6: "res/wheel_6.png",
     gas_pedal: "res/gas_pedal.png",
     brake_pedal: "res/brake_pedal.png",
+    gas: "res/gas.png"
 };
 
 var g_resources = [];
