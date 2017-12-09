@@ -1,8 +1,10 @@
+var intervalo = null;
 var ControlesLayer = cc.Layer.extend({
     etiquetaMonedas: null,
     monedas: 0,
     spriteBotonAcelerar: null,
     spriteBotonFrenar: null,
+    mouseDown: false,
     ctor: function () {
         this._super();
         var size = cc.winSize;
@@ -31,7 +33,7 @@ var ControlesLayer = cc.Layer.extend({
         cc.eventManager.addListener({
             event: cc.EventListener.MOUSE,
             onMouseDown: this.onMouseDown,
-            onMouseMove: this.onMouseMove
+            onMouseUp: this.onMouseUp
         }, this)
 
         return true;
@@ -40,30 +42,40 @@ var ControlesLayer = cc.Layer.extend({
     }, agregarMoneda: function () {
         this.monedas = this.monedas + 1;
         this.etiquetaMonedas.setString("Monedas: " + this.monedas);
-    },onMouseDown: function(event){
-        this.onMouseMove(event);
-    }, onMouseMove: function (event) {
-        var instancia = event.getCurrentTarget();
-        var areaBotonAcelerar = instancia.spriteBotonAcelerar.getBoundingBox();
-        var areaBotonFrenar = instancia.spriteBotonFrenar.getBoundingBox();
-        var posicionXEvento = event.getLocationX(), posicionYEvento = event.getLocationY();
+    }, onMouseDown: function (event) {
+        this.mouseDown = true;
+        if (!this.mouseDown)
+            return;
+        else {
+            intervalo = setInterval(function () {
+                var instancia = event.getCurrentTarget();
+                var areaBotonAcelerar = instancia.spriteBotonAcelerar.getBoundingBox();
+                var areaBotonFrenar = instancia.spriteBotonFrenar.getBoundingBox();
+                var posicionXEvento = event.getLocationX(), posicionYEvento = event.getLocationY();
 
-        // La pulsación cae dentro del botón
-        if (cc.rectContainsPoint(areaBotonAcelerar,
-            cc.p(posicionXEvento, posicionYEvento))) {
+                // La pulsación cae dentro del botón
+                if (cc.rectContainsPoint(areaBotonAcelerar,
+                    cc.p(posicionXEvento, posicionYEvento))) {
 
-            // Accedemos al padre (Scene), pedimos la capa con la idCapaJuego
-            var gameLayer = instancia.getParent().getChildByTag(idCapaJuego);
-            // tenemos el objeto GameLayer
-            gameLayer.jugador.moverDerecha();
+                    // Accedemos al padre (Scene), pedimos la capa con la idCapaJuego
+                    var gameLayer = instancia.getParent().getChildByTag(idCapaJuego);
+                    // tenemos el objeto GameLayer
+                    gameLayer.jugador.moverDerecha();
 
-        } else if (cc.rectContainsPoint(areaBotonFrenar
-            , cc.p(posicionXEvento, posicionYEvento))) {
+                } else if (cc.rectContainsPoint(areaBotonFrenar
+                    , cc.p(posicionXEvento, posicionYEvento))) {
 
-            // Accedemos al padre (Scene), pedimos la capa con la idCapaJuego
-            var gameLayer = instancia.getParent().getChildByTag(idCapaJuego);
-            // tenemos el objeto GameLayer
-            gameLayer.jugador.moverIzquierda();
+                    // Accedemos al padre (Scene), pedimos la capa con la idCapaJuego
+                    var gameLayer = instancia.getParent().getChildByTag(idCapaJuego);
+                    // tenemos el objeto GameLayer
+                    gameLayer.jugador.moverIzquierda();
+                }
+            }, 1);
+        }
+    }, onMouseUp: function () {
+        if (intervalo != null) {
+            this.mouseDown = false;
+            clearInterval(intervalo)
         }
     }
 });
