@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="20" tilewidth="32" tileheight="32" nextobjectid="4">
+ <tileset firstgid="1" name="spritesheet_complete" tilewidth="32" tileheight="32" tilecount="8192" columns="128">
+  <image source="spritesheet_complete.png" width="4096" height="2048"/>
+ </tileset>
+ <tileset firstgid="8193" name="tiles32" tilewidth="32" tileheight="32" tilecount="98" columns="14">
+  <image source="tiles32.png" width="448" height="224"/>
+ </tileset>
+ <layer name="PatronesFondo" width="500" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMA6BFeYr1jzZ4DgV7SVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV1T87yyAk
+  </data>
+ </layer>
+ <layer name="PatronesTerreno" width="500" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt2EFuglAUBVAGFtRuomtAinbbQLXdXd+PJVFClURaTXNOcvP4MNHRzX9ZBgAAAAAAAAAAAAAA/9/25d6/AAAAAAAAHlPaoV8KAPD4mnWWtZEuUi7Gs4lUE56Hc+xbegcAzKt8jp6NVGk+ZVmdx708ssuP5yb6t410i+vPwzn2rdPnADC7Jnq8jXTffT5MXcyTbWQXeSvu/Y8B4LH9tC+/lv5O3nd4fz/fRw5pFrfnEPmIfOpzALioXcY9O/J+Mpvl+fvhuV4de3vsbr7PZ4o+B4DJNtHNVeT1ZJar8/fDc+rztA//zV27PgeA6cY6+ZbMsWe3bwcAAAAAAADgr30BZnx1Cg==
+  </data>
+ </layer>
+ <objectgroup name="Suelos">
+  <object id="1" x="1" y="417">
+   <polyline points="0,0 414,0 512,-96 1334,-97"/>
+  </object>
+ </objectgroup>
+</map>
