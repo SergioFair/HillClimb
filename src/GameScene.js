@@ -24,6 +24,7 @@ var GameLayer = cc.Layer.extend({
     teclaBarra:false,
     monedas:[],
     jugador: null,
+    coche:null,
     space:null,
     ctor:function () {
         this._super();
@@ -39,7 +40,7 @@ var GameLayer = cc.Layer.extend({
         cc.spriteFrameCache.addSpriteFrames(res.playerdieright_plist);
         cc.spriteFrameCache.addSpriteFrames(res.disparo_plist);
         cc.spriteFrameCache.addSpriteFrames(res.playershootright_plist);
-
+        cc.spriteFrameCache.addSpriteFrames(res.orc_car_plist);
 
 
         // Inicializar Space
@@ -58,6 +59,7 @@ var GameLayer = cc.Layer.extend({
 
         this.jugador = new Jugador(this.space,
                cc.p(25,250), this);
+        this.coche = new Coche(this.space, cc.p(200, 225), this);
 
         cc.eventManager.addListener({
             event: cc.EventListener.KEYBOARD,
@@ -174,6 +176,7 @@ var GameLayer = cc.Layer.extend({
      }
      if( this.teclaDerecha ){
         this.jugador.moverDerecha();
+        this.coche.moverDerecha();
      }
      if ( !this.teclaIzquierda && !this.teclaIzquierda
         && !this.teclaDerecha ){

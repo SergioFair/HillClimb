@@ -45,6 +45,8 @@ var res = {
     wheel_4: "res/wheel_4.png",
     wheel_5: "res/wheel_5.png",
     wheel_6: "res/wheel_6.png",
+    orc_car_png: "res/orc_car.png",
+    orc_car_plist: "res/orc_car.plist"
 };
 
 var g_resources = [];
