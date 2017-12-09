@@ -27,6 +27,8 @@ var res = {
     disparo_plist: "res/disparo.plist",
     playershootright_png: "res/playershootright.png",
     playershootright_plist: "res/playershootright.plist",
+    spritesheet_complete_png: "res/spritesheet_complete.png",
+    mapa_tmx: "res/mapa.tmx",
 
     //Resources from hill climb
 

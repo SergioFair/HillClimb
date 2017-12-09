@@ -18,6 +18,7 @@
         "src/Jugador.js",
         "src/Enemigo.js",
         "src/Disparo.js",
-        "src/ControlesLayer.js"
+        "src/ControlesLayer.js",
+        "src/Coche.js"
     ]
 }

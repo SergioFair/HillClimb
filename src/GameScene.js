@@ -57,7 +57,7 @@ var GameLayer = cc.Layer.extend({
 
 
         this.jugador = new Jugador(this.space,
-               cc.p(50,150), this);
+               cc.p(25,250), this);
 
         cc.eventManager.addListener({
             event: cc.EventListener.KEYBOARD,
@@ -236,7 +236,7 @@ var GameLayer = cc.Layer.extend({
            }
        }
 
-       var grupoMonedas = this.mapa.getObjectGroup("Monedas");
+       /*var grupoMonedas = this.mapa.getObjectGroup("Monedas");
        var monedasArray = grupoMonedas.getObjects();
        for (var i = 0; i < monedasArray.length; i++) {
            var moneda = new Moneda(this.space,
@@ -307,7 +307,7 @@ var GameLayer = cc.Layer.extend({
 
               this.space.addStaticShape(shapeContenedor);
           }
-      }
+      }*/
     },teclaPulsada: function(keyCode, event){
         var instancia = event.getCurrentTarget();
 
