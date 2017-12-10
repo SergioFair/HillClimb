@@ -174,6 +174,7 @@ var GameLayer = cc.Layer.extend({
      }
      if (this.teclaIzquierda){
         this.jugador.moverIzquierda();
+        this.coche.moverIzquierda();
      }
      if( this.teclaDerecha ){
         this.jugador.moverDerecha();

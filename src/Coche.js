@@ -50,7 +50,7 @@ ctor:function (space, posicion, layer) {
 
     }, moverDerecha: function() {
         this.body.applyImpulse(cp.v(100, 0), cp.v(0, 0));
+    }, moverIzquierda: function() {
+        this.body.applyImpulse(cp.v(-100, 0), cp.v(0, 0));
     }
 });
-
-

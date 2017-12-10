@@ -60,7 +60,7 @@ var ControlesLayer = cc.Layer.extend({
                     // Accedemos al padre (Scene), pedimos la capa con la idCapaJuego
                     var gameLayer = instancia.getParent().getChildByTag(idCapaJuego);
                     // tenemos el objeto GameLayer
-                    gameLayer.jugador.moverDerecha();
+                    gameLayer.coche.moverDerecha();
 
                 } else if (cc.rectContainsPoint(areaBotonFrenar
                     , cc.p(posicionXEvento, posicionYEvento))) {
@@ -68,7 +68,7 @@ var ControlesLayer = cc.Layer.extend({
                     // Accedemos al padre (Scene), pedimos la capa con la idCapaJuego
                     var gameLayer = instancia.getParent().getChildByTag(idCapaJuego);
                     // tenemos el objeto GameLayer
-                    gameLayer.jugador.moverIzquierda();
+                    gameLayer.coche.moverIzquierda();
                 }
             }, 1);
         }

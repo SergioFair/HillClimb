@@ -55,7 +55,7 @@
 			<key>size</key>
 			<string>{256,512}</string>
 			<key>textureFileName</key>
-			<string>sprites.png</string>
+			<string>orc_car.png</string>
 			</dict>
 		</dict>
 </plist>
