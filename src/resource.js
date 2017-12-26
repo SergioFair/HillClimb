@@ -49,7 +49,8 @@ var res = {
     orc_car_plist: "res/orc_car.plist",
     gas_pedal: "res/gas_pedal.png",
     brake_pedal: "res/brake_pedal.png",
-    gas: "res/gas.png"
+    gas: "res/gas.png",
+    mapa_prueba: "res/Prueba.tmx",
 };
 
 var g_resources = [];

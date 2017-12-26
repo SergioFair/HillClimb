@@ -1,33 +1,34 @@
-
 var tipoJugador = 1;
 var tipoMoneda = 2;
 var tipoEnemigo = 3;
-var tipoContenedorGirarDerecha  = 400;
-var tipoContenedorGirarIzquierda  = 401;
+var tipoContenedorGirarDerecha = 400;
+var tipoContenedorGirarIzquierda = 401;
 var tipoDisparo = 5;
 var tipoSuelo = 6;
+var START_X = 250, START_Y = 300;
 
-var niveles = [ res.mapa1_tmx , res.mapa2_tmx ];
+//var niveles = [ res.mapa1_tmx , res.mapa2_tmx ];
+var niveles = [res.mapa_prueba];
 var nivelActual = 0;
 
 var GameLayer = cc.Layer.extend({
-    monedas:0,
-    tiempoDisparar:0,
-    disparos:[],
-    disparosEliminar:[],
-    enemigos:[],
-    enemigosEliminar:[],
-    formasEliminar:[],
-    teclaIzquierda:false,
-    teclaDerecha:false,
-    teclaArriba:false,
-    teclaBarra:false,
-    monedas:[],
-    gasolina:[],
+    monedas: 0,
+    tiempoDisparar: 0,
+    disparos: [],
+    disparosEliminar: [],
+    enemigos: [],
+    enemigosEliminar: [],
+    formasEliminar: [],
+    teclaIzquierda: false,
+    teclaDerecha: false,
+    teclaArriba: false,
+    teclaBarra: false,
+    monedas: [],
+    gasolina: [],
     jugador: null,
-    coche:null,
-    space:null,
-    ctor:function () {
+    coche: null,
+    space: null,
+    ctor: function () {
         this._super();
         var size = cc.winSize;
 
@@ -54,11 +55,11 @@ var GameLayer = cc.Layer.extend({
         // jugador y moneda
         // IMPORTANTE: Invocamos el método antes de resolver la colisión (realmente no habrá colisión).
         this.space.addCollisionHandler(tipoJugador, tipoMoneda,
-              null, this.colisionJugadorConMoneda.bind(this), null, null);
+            null, this.colisionJugadorConMoneda.bind(this), null, null);
 
-        this.jugador = new Jugador(this.space,
-               cc.p(25,250), this);
-        this.coche = new Coche(this.space, cc.p(200, 225), this);
+        /*this.jugador = new Jugador(this.space,
+               cc.p(100,250), this);*/
+        this.coche = new Coche(this.space, cc.p(START_X, START_Y), this);
 
         cc.eventManager.addListener({
             event: cc.EventListener.KEYBOARD,
@@ -72,176 +73,192 @@ var GameLayer = cc.Layer.extend({
         // jugador y moneda
         // IMPORTANTE: Invocamos el método antes de resolver la colisión (realmente no habrá colisión).
         this.space.addCollisionHandler(tipoJugador, tipoMoneda,
-              null, this.colisionJugadorConMoneda.bind(this), null, null);
+            null, this.colisionJugadorConMoneda.bind(this), null, null);
 
-       // enemigo y contenedor
-       // IMPORTANTE: Invocamos el método antes de resolver la colisión (realmente no habrá colisión).
-       this.space.addCollisionHandler(tipoEnemigo, tipoContenedorGirarDerecha,
+        // enemigo y contenedor
+        // IMPORTANTE: Invocamos el método antes de resolver la colisión (realmente no habrá colisión).
+        this.space.addCollisionHandler(tipoEnemigo, tipoContenedorGirarDerecha,
             null, this.colisionEnemigoConContenedorGirarDerecha.bind(this), null, null);
 
-       this.space.addCollisionHandler(tipoEnemigo, tipoContenedorGirarIzquierda,
+        this.space.addCollisionHandler(tipoEnemigo, tipoContenedorGirarIzquierda,
             null, this.colisionEnemigoConContenedorGirarIzquierda.bind(this), null, null);
 
 
-       // disparo y enemigo
-       // IMPORTANTE: Invocamos el método antes de resolver la colisión (realmente no habrá colisión).
-       this.space.addCollisionHandler(tipoDisparo, tipoEnemigo,
+        // disparo y enemigo
+        // IMPORTANTE: Invocamos el método antes de resolver la colisión (realmente no habrá colisión).
+        this.space.addCollisionHandler(tipoDisparo, tipoEnemigo,
             null, this.colisionDisparoConEnemigo.bind(this), null, null);
 
-      // disparo y muro
-      // IMPORTANTE: Invocamos el método antes de resolver la colisión (realmente no habrá colisión).
-      this.space.addCollisionHandler(tipoDisparo, tipoSuelo,
-           null, this.colisionDisparoConSuelo.bind(this), null, null);
-       return true;
+        // disparo y muro
+        // IMPORTANTE: Invocamos el método antes de resolver la colisión (realmente no habrá colisión).
+        this.space.addCollisionHandler(tipoDisparo, tipoSuelo,
+            null, this.colisionDisparoConSuelo.bind(this), null, null);
+        return true;
 
-},update:function (dt) {
-     this.space.step(dt);
+    },
+    update: function (dt) {
+        this.space.step(dt);
 
-     var capaControles =
-               this.getParent().getChildByTag(idCapaControles);
+        var capaControles =
+            this.getParent().getChildByTag(idCapaControles);
 
-     if ( capaControles.monedas >= 40){
-        nivelActual = nivelActual + 1;
-        cc.director.runScene(new GameScene());
-     }
+        if (capaControles.monedas >= 40) {
+            nivelActual = nivelActual + 1;
+            cc.director.runScene(new GameScene());
+        }
 
-      // Mover enemigos:
-       for(var i = 0; i < this.enemigos.length; i++) {
-          var enemigo = this.enemigos[i];
-          enemigo.moverAutomaticamente();
-      }
+        // Mover enemigos:
+        for (var i = 0; i < this.enemigos.length; i++) {
+            var enemigo = this.enemigos[i];
+            enemigo.moverAutomaticamente();
+        }
 
-      console.log("Formas eliminar: "+this.formasEliminar.length);
-     // Eliminar formas:
-     for(var i = 0; i < this.formasEliminar.length; i++) {
-         var shape = this.formasEliminar[i];
+        console.log("Formas eliminar: " + this.formasEliminar.length);
+        // Eliminar formas:
+        for (var i = 0; i < this.formasEliminar.length; i++) {
+            var shape = this.formasEliminar[i];
 
-         for (var r = 0; r < this.monedas.length; r++) {
-           if (this.monedas[r].shape == shape) {
-               this.monedas[r].eliminar();
-               this.monedas.splice(r, 1);
-           }
-         }
-
-         for (var r = 0; r < this.enemigos.length; r++) {
-            if (this.enemigos[r].shape == shape) {
-                console.log("Enemigo eliminado");
-                this.enemigos[r].eliminar();
-                this.enemigos.splice(r, 1);
+            for (var r = 0; r < this.monedas.length; r++) {
+                if (this.monedas[r].shape == shape) {
+                    this.monedas[r].eliminar();
+                    this.monedas.splice(r, 1);
+                }
             }
-         }
 
-         for (var r = 0; r < this.disparos.length; r++) {
-             if (this.disparos[r].shape == shape) {
-                 this.disparos[r].eliminar();
-                 this.disparos.splice(r, 1);
-             }
-         }
-
-         for (var r = 0; r < this.gasolina.length; r++) {
-            if (this.gasolina[r].shape == shape) {
-                this.gasolina[r].eliminar();
-                this.gasolina.splice(r, 1);
+            for (var r = 0; r < this.enemigos.length; r++) {
+                if (this.enemigos[r].shape == shape) {
+                    console.log("Enemigo eliminado");
+                    this.enemigos[r].eliminar();
+                    this.enemigos.splice(r, 1);
+                }
             }
-          }
-     }
 
-     this.formasEliminar = [];
+            for (var r = 0; r < this.disparos.length; r++) {
+                if (this.disparos[r].shape == shape) {
+                    this.disparos[r].eliminar();
+                    this.disparos.splice(r, 1);
+                }
+            }
 
-     // Caída, sí cae vuelve a la posición inicial
-     if( this.jugador.body.p.y < -100){
-        this.jugador.body.p = cc.p(50,150);
-     }
+            for (var r = 0; r < this.gasolina.length; r++) {
+                if (this.gasolina[r].shape == shape) {
+                    this.gasolina[r].eliminar();
+                    this.gasolina.splice(r, 1);
+                }
+            }
+        }
 
-    if ( this.teclaBarra && new Date().getTime() - this.tiempoDisparar > 1000 ){
-        this.tiempoDisparar = new Date().getTime();
-        var disparo = new Disparo(this.space,
-          cc.p(this.jugador.body.p.x, this.jugador.body.p.y),
-          this);
+        this.formasEliminar = [];
 
-          if ( this.jugador.sprite.scaleX > 0){
-               disparo.body.vx = 400;
-          } else {
-               disparo.body.vx = -400;
-          }
+        /* Caída, sí cae vuelve a la posición inicial
+        if (this.jugador.body.p.y < -100) {
+            this.jugador.body.p = cc.p(50, 150);
+        }*/
 
-        this.disparos.push(disparo);
-        this.jugador.disparar();
-    }
+        // Caída, sí cae vuelve a la posición inicial
+        if (this.coche.body.p.y < -100) {
+            this.coche.body.p = cc.p(START_X, START_Y);
+        }
 
-     if ( this.teclaArriba ){
-        this.jugador.moverArriba();
-     }
-     if (this.teclaIzquierda){
-        this.jugador.moverIzquierda();
-        this.coche.moverIzquierda();
-     }
-     if( this.teclaDerecha ){
-        this.jugador.moverDerecha();
-        this.coche.moverDerecha();
-     }
-     if ( !this.teclaIzquierda && !this.teclaIzquierda
-        && !this.teclaDerecha ){
-        this.jugador.body.vx = 0;
-     }
+        /*if (this.teclaBarra && new Date().getTime() - this.tiempoDisparar > 1000) {
+            this.tiempoDisparar = new Date().getTime();
+            var disparo = new Disparo(this.space,
+                cc.p(this.jugador.body.p.x, this.jugador.body.p.y),
+                this);
 
-     this.jugador.actualizarAnimacion();
+            if (this.jugador.sprite.scaleX > 0) {
+                disparo.body.vx = 400;
+            } else {
+                disparo.body.vx = -400;
+            }
 
-     // actualizar camara (posición de la capa).
-        var posicionX = this.jugador.body.p.x -200;
-        var posicionY = this.jugador.body.p.y -200;
+            this.disparos.push(disparo);
+            this.jugador.disparar();
+        }
 
-    if(posicionX < 0){
-        posicionX = 0;
-    }
-    if(posicionY < 0){
-        posicionY = 0;
-    }
+        if (this.teclaArriba) {
+            this.jugador.moverArriba();
+        }*/
+        if (this.teclaIzquierda) {
+            //this.jugador.moverIzquierda();
+            this.coche.moverIzquierda();
+        }
+        if (this.teclaDerecha) {
+            //this.jugador.moverDerecha();
+            this.coche.moverDerecha();
+        }
+        /*if (!this.teclaIzquierda && !this.teclaDerecha) {
+            this.coche.body.vx = 0;
+        }*/
 
-    this.setPosition(cc.p( -posicionX, -posicionY ));
+        //this.jugador.actualizarAnimacion();
+
+        // actualizar camara (posición de la capa).
+        //var posicionX = this.jugador.body.p.x - 200;
+        //var posicionY = this.jugador.body.p.y - 200;
+        var posicionX = this.coche.body.p.x - 200;
+        var posicionY = this.coche.body.p.y - 200;
+
+        if (posicionX < 0) {
+            posicionX = 0;
+        }
+        if (posicionY < 0) {
+            posicionY = 0;
+        }
+
+        this.setPosition(cc.p(-posicionX, -posicionY));
 
 
-     if (this.jugador.body.vx < -200){
-          this.jugador.body.vx = -200;
-     }
+        /*if (this.jugador.body.vx < -200) {
+            this.jugador.body.vx = -200;
+        }
 
-     if (this.jugador.body.vx > 200){
-         this.jugador.body.vx = 200;
-     }
+        if (this.jugador.body.vx > 200) {
+            this.jugador.body.vx = 200;
+        }*/
 
-}, cargarMapa:function () {
-       this.mapa = new cc.TMXTiledMap(niveles[nivelActual]);
-       // Añadirlo a la Layer
-       this.addChild(this.mapa);
-       // Ancho del mapa
-       this.mapaAncho = this.mapa.getContentSize().width;
+        if (this.coche.body.vx < -200) {
+            this.coche.body.vx = -200;
+        }
 
-       // Solicitar los objeto dentro de la capa Suelos
-       var grupoSuelos = this.mapa.getObjectGroup("Suelos");
-       var suelosArray = grupoSuelos.getObjects();
+        if (this.coche.body.vx > 200) {
+            this.coche.body.vx = 200;
+        }
 
-       // Los objetos de la capa suelos se transforman a
-       // formas estáticas de Chipmunk ( SegmentShape ).
-       for (var i = 0; i < suelosArray.length; i++) {
-           var suelo = suelosArray[i];
-           var puntos = suelo.polylinePoints;
-           for(var j = 0; j < puntos.length - 1; j++){
-               var bodySuelo = new cp.StaticBody();
+    },
+    cargarMapa: function () {
+        this.mapa = new cc.TMXTiledMap(niveles[nivelActual]);
+        // Añadirlo a la Layer
+        this.addChild(this.mapa);
+        // Ancho del mapa
+        this.mapaAncho = this.mapa.getContentSize().width;
 
-               var shapeSuelo = new cp.SegmentShape(bodySuelo,
-                   cp.v(parseInt(suelo.x) + parseInt(puntos[j].x),
-                       parseInt(suelo.y) - parseInt(puntos[j].y)),
-                   cp.v(parseInt(suelo.x) + parseInt(puntos[j + 1].x),
-                       parseInt(suelo.y) - parseInt(puntos[j + 1].y)),
-                   10);
-               shapeSuelo.setFriction(0);
-               shapeSuelo.setCollisionType(tipoSuelo);
-               //shapeSuelo.setElasticity(0);
-               this.space.addStaticShape(shapeSuelo);
-           }
-       }
+        // Solicitar los objeto dentro de la capa Suelos
+        var grupoSuelos = this.mapa.getObjectGroup("Suelos");
+        var suelosArray = grupoSuelos.getObjects();
 
-       /*var grupoMonedas = this.mapa.getObjectGroup("Monedas");
+        // Los objetos de la capa suelos se transforman a
+        // formas estáticas de Chipmunk ( SegmentShape ).
+        for (var i = 0; i < suelosArray.length; i++) {
+            var suelo = suelosArray[i];
+            var puntos = suelo.polylinePoints;
+            for (var j = 0; j < puntos.length - 1; j++) {
+                var bodySuelo = new cp.StaticBody();
+
+                var shapeSuelo = new cp.SegmentShape(bodySuelo,
+                    cp.v(parseInt(suelo.x) + parseInt(puntos[j].x),
+                        parseInt(suelo.y) - parseInt(puntos[j].y)),
+                    cp.v(parseInt(suelo.x) + parseInt(puntos[j + 1].x),
+                        parseInt(suelo.y) - parseInt(puntos[j + 1].y)),
+                    10);
+                shapeSuelo.setFriction(0);
+                shapeSuelo.setCollisionType(tipoSuelo);
+                //shapeSuelo.setElasticity(0);
+                this.space.addStaticShape(shapeSuelo);
+            }
+        }
+
+        /*var grupoMonedas = this.mapa.getObjectGroup("Monedas");
        var monedasArray = grupoMonedas.getObjects();
        for (var i = 0; i < monedasArray.length; i++) {
            var moneda = new Moneda(this.space,
@@ -320,45 +337,48 @@ var GameLayer = cc.Layer.extend({
               this.space.addStaticShape(shapeContenedor);
           }
       }*/
-    },teclaPulsada: function(keyCode, event){
+    },
+    teclaPulsada: function (keyCode, event) {
         var instancia = event.getCurrentTarget();
 
         // Flecha izquierda
-        if( keyCode == 37){
+        if (keyCode == 37) {
             instancia.teclaIzquierda = true;
         }
         // Flecha derecha
-        if( keyCode == 39){
+        if (keyCode == 39) {
             instancia.teclaDerecha = true;
         }
         // Flecha arriba
-        if( keyCode == 38){
+        if (keyCode == 38) {
             instancia.teclaArriba = true;
         }
         // Barra espaciadora
-        if( keyCode == 32){
+        if (keyCode == 32) {
             instancia.teclaBarra = true;
         }
-    },teclaLevantada: function(keyCode, event){
+    },
+    teclaLevantada: function (keyCode, event) {
         var instancia = event.getCurrentTarget();
-        console.log("Tecla Levantada "+keyCode);
+        console.log("Tecla Levantada " + keyCode);
         // Flecha izquierda
-        if( keyCode == 37){
+        if (keyCode == 37) {
             instancia.teclaIzquierda = false;
         }
         // Flecha derecha
-        if( keyCode == 39){
+        if (keyCode == 39) {
             instancia.teclaDerecha = false;
         }
         // Flecha arriba
-        if( keyCode == 38){
+        if (keyCode == 38) {
             instancia.teclaArriba = false;
         }
         // Barra espaciadora
-        if( keyCode == 32){
+        if (keyCode == 32) {
             instancia.teclaBarra = false;
         }
-     },colisionJugadorConMoneda:function (arbiter, space) {
+    },
+    colisionJugadorConMoneda: function (arbiter, space) {
 
         // Marcar la moneda para eliminarla
         var shapes = arbiter.getShapes();
@@ -368,45 +388,49 @@ var GameLayer = cc.Layer.extend({
         this.tiempoEfecto = 100;
 
         var capaControles =
-           this.getParent().getChildByTag(idCapaControles);
+            this.getParent().getChildByTag(idCapaControles);
         capaControles.agregarMoneda();
-     },colisionEnemigoConContenedorGirarDerecha:function (arbiter, space) {
-          var shapes = arbiter.getShapes();
-          // shapes[0] es el enemigo
-          var formaEnemigo = shapes[0];
-          for (var i = 0; i < this.enemigos.length; i++) {
-              if (this.enemigos[i].shape == formaEnemigo) {
-                  this.enemigos[i].body.vx = 0; //parar
-                  this.enemigos[i].direccionX = "izquierda";
-              }
-          }
-     },colisionEnemigoConContenedorGirarIzquierda:function (arbiter, space) {
-          var shapes = arbiter.getShapes();
-          // shapes[0] es el enemigo
-          var formaEnemigo = shapes[0];
-          for (var i = 0; i < this.enemigos.length; i++) {
-              if (this.enemigos[i].shape == formaEnemigo) {
-                  this.enemigos[i].body.vx = 0; //parar
-                  this.enemigos[i].direccionX = "derecha";
-              }
-          }
-     }, colisionDisparoConEnemigo:function (arbiter, space) {
-          var shapes = arbiter.getShapes();
+    },
+    colisionEnemigoConContenedorGirarDerecha: function (arbiter, space) {
+        var shapes = arbiter.getShapes();
+        // shapes[0] es el enemigo
+        var formaEnemigo = shapes[0];
+        for (var i = 0; i < this.enemigos.length; i++) {
+            if (this.enemigos[i].shape == formaEnemigo) {
+                this.enemigos[i].body.vx = 0; //parar
+                this.enemigos[i].direccionX = "izquierda";
+            }
+        }
+    },
+    colisionEnemigoConContenedorGirarIzquierda: function (arbiter, space) {
+        var shapes = arbiter.getShapes();
+        // shapes[0] es el enemigo
+        var formaEnemigo = shapes[0];
+        for (var i = 0; i < this.enemigos.length; i++) {
+            if (this.enemigos[i].shape == formaEnemigo) {
+                this.enemigos[i].body.vx = 0; //parar
+                this.enemigos[i].direccionX = "derecha";
+            }
+        }
+    },
+    colisionDisparoConEnemigo: function (arbiter, space) {
+        var shapes = arbiter.getShapes();
 
-          this.formasEliminar.push(shapes[0]);
-          this.formasEliminar.push(shapes[1]);
-     }, colisionDisparoConSuelo:function (arbiter, space) {
-          var shapes = arbiter.getShapes();
+        this.formasEliminar.push(shapes[0]);
+        this.formasEliminar.push(shapes[1]);
+    },
+    colisionDisparoConSuelo: function (arbiter, space) {
+        var shapes = arbiter.getShapes();
 
-          this.formasEliminar.push(shapes[0]);
-     }
+        this.formasEliminar.push(shapes[0]);
+    }
 });
 
 var idCapaJuego = 1;
 var idCapaControles = 2;
 
 var GameScene = cc.Scene.extend({
-    onEnter:function () {
+    onEnter: function () {
         this._super();
         var layer = new GameLayer();
         this.addChild(layer, 0, idCapaJuego);

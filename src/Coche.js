@@ -23,7 +23,7 @@ ctor:function (space, posicion, layer) {
     this.sprite = new cc.PhysicsSprite("#orc_car1.png");
 
     // Cuerpo dinámico, SI le afectan las fuerzas
-    this.body = new cp.Body(5, Infinity);
+    this.body = new cp.Body(10, Infinity);
 
     this.body.setPos(posicion);
     this.body.setAngle(0);
@@ -33,11 +33,11 @@ ctor:function (space, posicion, layer) {
 
     // forma
     this.shape = new cp.BoxShape(this.body,
-        this.sprite.getContentSize().width,
-        this.sprite.getContentSize().height);
+        this.sprite.getContentSize().width/3,
+        this.sprite.getContentSize().height/3);
     // agregar forma dinamica
     this.space.addShape(this.shape);
-    this.shape.setCollisionType(tipoEnemigo);
+    //this.shape.setCollisionType(tipoEnemigo);
     // añadir sprite a la capa
 
     // ejecutar la animación
@@ -46,7 +46,7 @@ ctor:function (space, posicion, layer) {
     this.layer.addChild(this.sprite,10);
 
     // Impulso inicial
-    this.body.applyImpulse(cp.v(300, 0), cp.v(0, 0));
+    //this.body.applyImpulse(cp.v(300, 0), cp.v(0, 0));
 
     }, moverDerecha: function() {
         this.body.applyImpulse(cp.v(100, 0), cp.v(0, 0));
