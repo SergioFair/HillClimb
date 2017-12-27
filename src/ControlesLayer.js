@@ -4,6 +4,7 @@ var ControlesLayer = cc.Layer.extend({
     monedas: 0,
     spriteBotonAcelerar: null,
     spriteBotonFrenar: null,
+    spriteMarcadorMonedas: null,
     mouseDown: false,
     ctor: function () {
         this._super();
@@ -24,9 +25,13 @@ var ControlesLayer = cc.Layer.extend({
         this.addChild(this.spriteBotonFrenar);
 
         // Contador Monedas
-        this.etiquetaMonedas = new cc.LabelTTF("Monedas: 0", "Helvetica", 20);
-        this.etiquetaMonedas.setPosition(cc.p(size.width - 90, size.height - 20));
+        this.spriteMarcadorMonedas = cc.Sprite.create(res.moneda1_png);
+        this.spriteMarcadorMonedas.setPosition(
+            cc.p(cc.p(size.width - 60, size.height - 20)));
+        this.etiquetaMonedas = new cc.LabelTTF("0", "Helvetica", 30);
+        this.etiquetaMonedas.setPosition(cc.p(size.width - 90, size.height - 25));
         this.etiquetaMonedas.fillStyle = new cc.Color(0, 0, 0, 0);
+        this.addChild(this.spriteMarcadorMonedas);
         this.addChild(this.etiquetaMonedas);
 
         // Registrar Mouse Down
@@ -41,7 +46,7 @@ var ControlesLayer = cc.Layer.extend({
 
     }, agregarMoneda: function () {
         this.monedas = this.monedas + 1;
-        this.etiquetaMonedas.setString("Monedas: " + this.monedas);
+        this.etiquetaMonedas.setString(this.monedas);
     }, onMouseDown: function (event) {
         this.mouseDown = true;
         if (!this.mouseDown)

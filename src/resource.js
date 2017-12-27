@@ -9,6 +9,7 @@ var res = {
     mapa2_tmx: "res/mapa2.tmx",
     moneda_png : "res/moneda.png",
     moneda_plist : "res/moneda.plist",
+    moneda1_png : "res/moneda1.png",
     playerrunright_png : "res/playerrunright.png",
     playerrunright_plist : "res/playerrunright.plist",
     playerjumpright_png : "res/playerjumpright.png",

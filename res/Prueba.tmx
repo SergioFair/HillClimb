@@ -19,7 +19,6 @@
   </object>
  </objectgroup>
  <objectgroup name="Monedas">
-  <object id="2" x="375" y="356" width="40" height="40"/>
   <object id="3" x="568" y="353" width="40" height="40"/>
   <object id="4" x="730" y="354" width="40" height="40"/>
   <object id="5" x="942" y="351" width="40" height="40"/>
