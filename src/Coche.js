@@ -37,7 +37,7 @@ ctor:function (space, posicion, layer) {
         this.sprite.getContentSize().height/3);
     // agregar forma dinamica
     this.space.addShape(this.shape);
-    //this.shape.setCollisionType(tipoEnemigo);
+    this.shape.setCollisionType(tipoJugador);
     // añadir sprite a la capa
 
     // ejecutar la animación

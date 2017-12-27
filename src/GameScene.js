@@ -258,7 +258,7 @@ var GameLayer = cc.Layer.extend({
             }
         }
 
-        /*var grupoMonedas = this.mapa.getObjectGroup("Monedas");
+       var grupoMonedas = this.mapa.getObjectGroup("Monedas");
        var monedasArray = grupoMonedas.getObjects();
        for (var i = 0; i < monedasArray.length; i++) {
            var moneda = new Moneda(this.space,
@@ -268,16 +268,16 @@ var GameLayer = cc.Layer.extend({
            this.monedas.push(moneda);
        }
 
-       var grupoGasolina = this.mapa.getObjectGroup("Gasolina");
+       /*var grupoGasolina = this.mapa.getObjectGroup("Gasolina");
        var gasolinaArray = grupoGasolina.getObjects();
        for (var i = 0; i < gasolinaArray.length; i++) {
-           var gas = new Gasoluna(this.space,
+           var gas = new Gasolina(this.space,
                cc.p(gasolinaArray[i]["x"],gasolinaArray[i]["y"]),
                this);
 
            this.gasolina.push(gas);
-       }
-
+       }*/
+/*
        var grupoEnemigos = this.mapa.getObjectGroup("Enemigos");
        var enemigosArray = grupoEnemigos.getObjects();
        for (var i = 0; i < enemigosArray.length; i++) {

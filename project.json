@@ -19,6 +19,7 @@
         "src/Enemigo.js",
         "src/Disparo.js",
         "src/ControlesLayer.js",
-        "src/Coche.js"
+        "src/Coche.js",
+        "src/Gasolina.js"
     ]
 }
