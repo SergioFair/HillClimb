@@ -193,7 +193,9 @@ var GameLayer = cc.Layer.extend({
         if (this.teclaDerecha) {
             //this.jugador.moverDerecha();
             this.coche.moverDerecha();
-            capaControles.incrementarMetros();
+        }
+        if (this.coche.body.vx > 0){
+            capaControles.incrementarMetros(Math.round(this.coche.body.p.x)-START_X);
         }
         /*if (!this.teclaIzquierda && !this.teclaDerecha) {
             this.coche.body.vx = 0;

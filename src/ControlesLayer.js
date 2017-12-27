@@ -56,18 +56,24 @@ var ControlesLayer = cc.Layer.extend({
         return true;
 
 
-    }, agregarMoneda: function () {
+    },
+    agregarMoneda: function () {
         this.monedas = this.monedas + 1;
         this.etiquetaMonedas.setString(this.monedas);
-    }, incrementarMetros: function () {
-        this.metros++;
-        this.etiquetaMetros.setString(this.metros + "m");
-    }, resetearMarcadores: function () {
+    },
+    incrementarMetros: function (pos) {
+        if (pos > this.metros) {
+            this.metros = pos;
+            this.etiquetaMetros.setString(this.metros + "m");
+        }
+    },
+    resetearMarcadores: function () {
         this.etiquetaMonedas.setString(0);
         this.monedas = 0;
         this.etiquetaMetros.setString(0);
         this.metros = 0;
-    }, onMouseDown: function (event) {
+    },
+    onMouseDown: function (event) {
         this.mouseDown = true;
         if (!this.mouseDown)
             return;
@@ -76,19 +82,19 @@ var ControlesLayer = cc.Layer.extend({
                 var instancia = event.getCurrentTarget();
                 var areaBotonAcelerar = instancia.spriteBotonAcelerar.getBoundingBox();
                 var areaBotonFrenar = instancia.spriteBotonFrenar.getBoundingBox();
-                var posicionXEvento = event.getLocationX(), posicionYEvento = event.getLocationY();
+                var posicionXEvento = event.getLocationX(),
+                    posicionYEvento = event.getLocationY();
 
                 // La pulsación cae dentro del botón
                 if (cc.rectContainsPoint(areaBotonAcelerar,
-                    cc.p(posicionXEvento, posicionYEvento))) {
+                        cc.p(posicionXEvento, posicionYEvento))) {
 
                     // Accedemos al padre (Scene), pedimos la capa con la idCapaJuego
                     var gameLayer = instancia.getParent().getChildByTag(idCapaJuego);
                     // tenemos el objeto GameLayer
                     gameLayer.coche.moverDerecha();
 
-                } else if (cc.rectContainsPoint(areaBotonFrenar
-                    , cc.p(posicionXEvento, posicionYEvento))) {
+                } else if (cc.rectContainsPoint(areaBotonFrenar, cc.p(posicionXEvento, posicionYEvento))) {
 
                     // Accedemos al padre (Scene), pedimos la capa con la idCapaJuego
                     var gameLayer = instancia.getParent().getChildByTag(idCapaJuego);
@@ -97,7 +103,8 @@ var ControlesLayer = cc.Layer.extend({
                 }
             }, 1);
         }
-    }, onMouseUp: function () {
+    },
+    onMouseUp: function () {
         if (intervalo != null) {
             this.mouseDown = false;
             clearInterval(intervalo)
