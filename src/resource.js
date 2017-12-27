@@ -53,6 +53,7 @@ var res = {
     gas: "res/gas.png",
     gas_plist : "res/gas.plist",
     mapa_prueba: "res/Prueba.tmx",
+    flag_png : "res/flag.png"
 };
 
 var g_resources = [];

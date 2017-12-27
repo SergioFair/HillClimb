@@ -2,9 +2,11 @@ var intervalo = null;
 var ControlesLayer = cc.Layer.extend({
     etiquetaMonedas: null,
     monedas: 0,
+    metros: 0,
     spriteBotonAcelerar: null,
     spriteBotonFrenar: null,
     spriteMarcadorMonedas: null,
+    spriteBanderaMeta: null,
     mouseDown: false,
     ctor: function () {
         this._super();
@@ -34,6 +36,16 @@ var ControlesLayer = cc.Layer.extend({
         this.addChild(this.spriteMarcadorMonedas);
         this.addChild(this.etiquetaMonedas);
 
+        // Contador metros
+        this.spriteBanderaMeta = cc.Sprite.create(res.flag_png);
+        this.spriteBanderaMeta.setPosition(
+            cc.p(size.width * 0.03, size.height * 0.95));
+        this.etiquetaMetros = new cc.LabelTTF("0", "Helvetica", 30);
+        this.etiquetaMetros.setPosition(cc.p(size.width * 0.1, size.height * 0.95));
+        this.etiquetaMetros.fillStyle = new cc.Color(0, 0, 0, 0);
+        this.addChild(this.spriteBanderaMeta);
+        this.addChild(this.etiquetaMetros);
+
         // Registrar Mouse Down
         cc.eventManager.addListener({
             event: cc.EventListener.MOUSE,
@@ -47,6 +59,14 @@ var ControlesLayer = cc.Layer.extend({
     }, agregarMoneda: function () {
         this.monedas = this.monedas + 1;
         this.etiquetaMonedas.setString(this.monedas);
+    }, incrementarMetros: function () {
+        this.metros++;
+        this.etiquetaMetros.setString(this.metros + "m");
+    }, resetearMarcadores: function () {
+        this.etiquetaMonedas.setString(0);
+        this.monedas = 0;
+        this.etiquetaMetros.setString(0);
+        this.metros = 0;
     }, onMouseDown: function (event) {
         this.mouseDown = true;
         if (!this.mouseDown)

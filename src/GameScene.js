@@ -164,6 +164,7 @@ var GameLayer = cc.Layer.extend({
         // Caída, sí cae vuelve a la posición inicial
         if (this.coche.body.p.y < -100) {
             this.coche.body.p = cc.p(START_X, START_Y);
+            capaControles.resetearMarcadores();
         }
 
         /*if (this.teclaBarra && new Date().getTime() - this.tiempoDisparar > 1000) {
@@ -192,6 +193,7 @@ var GameLayer = cc.Layer.extend({
         if (this.teclaDerecha) {
             //this.jugador.moverDerecha();
             this.coche.moverDerecha();
+            capaControles.incrementarMetros();
         }
         /*if (!this.teclaIzquierda && !this.teclaDerecha) {
             this.coche.body.vx = 0;
