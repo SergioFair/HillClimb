@@ -414,6 +414,7 @@ var GameLayer = cc.Layer.extend({
             this.getParent().getChildByTag(idCapaControles);
 
         // Incrementar gasolina....
+        capaControles.incrementarGasolina();
         
     },
     colisionEnemigoConContenedorGirarDerecha: function (arbiter, space) {

@@ -7,6 +7,7 @@ var ControlesLayer = cc.Layer.extend({
     spriteBotonFrenar: null,
     spriteMarcadorMonedas: null,
     spriteBanderaMeta: null,
+    barraGasolina: null,
     mouseDown: false,
     ctor: function () {
         this._super();
@@ -46,6 +47,14 @@ var ControlesLayer = cc.Layer.extend({
         this.addChild(this.spriteBanderaMeta);
         this.addChild(this.etiquetaMetros);
 
+        // Barra gasolina
+        this.barraGasolina = ccui.LoadingBar.create();
+        this.barraGasolina.loadTexture(res.progressBar_png);
+        this.barraGasolina.x = size.width / 2;
+        this.barraGasolina.y = size.height * 0.9;
+        this.barraGasolina.setPercent(0);
+        this.addChild(this.barraGasolina);
+
         // Registrar Mouse Down
         cc.eventManager.addListener({
             event: cc.EventListener.MOUSE,
@@ -53,9 +62,12 @@ var ControlesLayer = cc.Layer.extend({
             onMouseUp: this.onMouseUp
         }, this)
 
+        this.scheduleUpdate();
+
         return true;
-
-
+    },
+    update: function (dt) {
+        this.barraGasolina.setPercent(0);
     },
     agregarMoneda: function () {
         this.monedas = this.monedas + 1;
@@ -72,6 +84,13 @@ var ControlesLayer = cc.Layer.extend({
         this.monedas = 0;
         this.etiquetaMetros.setString(0);
         this.metros = 0;
+    },
+    incrementarGasolina: function () {
+        if (this.barraGasolina.getPercent() >= 75) {
+            this.barraGasolina.setPercent(100);
+        } else {
+            this.barraGasolina.percent += 25;
+        }
     },
     onMouseDown: function (event) {
         this.mouseDown = true;
