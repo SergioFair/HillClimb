@@ -51,6 +51,7 @@ var res = {
     gas_pedal: "res/gas_pedal.png",
     brake_pedal: "res/brake_pedal.png",
     gas: "res/gas.png",
+    gas_plist : "res/gas.plist",
     mapa_prueba: "res/Prueba.tmx",
 };
 

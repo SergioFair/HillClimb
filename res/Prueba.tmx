@@ -24,7 +24,6 @@
   <object id="5" x="942" y="351" width="40" height="40"/>
  </objectgroup>
  <objectgroup name="Gasolina">
-  <object id="6" x="467" y="359" width="40" height="40"/>
-  <object id="7" x="844" y="351" width="40" height="40"/>
+  <object id="7" x="843" y="343" width="40" height="40"/>
  </objectgroup>
 </map>

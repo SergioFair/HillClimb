@@ -30,7 +30,7 @@ ctor:function (space, posicion, layer) {
     this.shape = new cp.BoxShape(body
                                 , this.sprite.getContentSize().width
                                 , this.sprite.getContentSize().height);
-    this.shape.setCollisionType(tipoMoneda);
+    this.shape.setCollisionType(tipoGasolina);
     // Nunca genera colisiones reales
     this.shape.setSensor(true);
     // forma estática

@@ -1,6 +1,7 @@
 var tipoJugador = 1;
 var tipoMoneda = 2;
 var tipoEnemigo = 3;
+var tipoGasolina = 4;
 var tipoContenedorGirarDerecha = 400;
 var tipoContenedorGirarIzquierda = 401;
 var tipoDisparo = 5;
@@ -43,6 +44,7 @@ var GameLayer = cc.Layer.extend({
         cc.spriteFrameCache.addSpriteFrames(res.disparo_plist);
         cc.spriteFrameCache.addSpriteFrames(res.playershootright_plist);
         cc.spriteFrameCache.addSpriteFrames(res.orc_car_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.gas_plist);
 
         // Inicializar Space
         this.space = new cp.Space();
@@ -74,6 +76,10 @@ var GameLayer = cc.Layer.extend({
         // IMPORTANTE: Invocamos el método antes de resolver la colisión (realmente no habrá colisión).
         this.space.addCollisionHandler(tipoJugador, tipoMoneda,
             null, this.colisionJugadorConMoneda.bind(this), null, null);
+
+        // jugador y gasolina
+        this.space.addCollisionHandler(tipoJugador, tipoGasolina,
+            null, this.colisionJugadorConGasolina.bind(this), null, null);
 
         // enemigo y contenedor
         // IMPORTANTE: Invocamos el método antes de resolver la colisión (realmente no habrá colisión).
@@ -268,7 +274,7 @@ var GameLayer = cc.Layer.extend({
            this.monedas.push(moneda);
        }
 
-       /*var grupoGasolina = this.mapa.getObjectGroup("Gasolina");
+       var grupoGasolina = this.mapa.getObjectGroup("Gasolina");
        var gasolinaArray = grupoGasolina.getObjects();
        for (var i = 0; i < gasolinaArray.length; i++) {
            var gas = new Gasolina(this.space,
@@ -276,7 +282,7 @@ var GameLayer = cc.Layer.extend({
                this);
 
            this.gasolina.push(gas);
-       }*/
+       }
 /*
        var grupoEnemigos = this.mapa.getObjectGroup("Enemigos");
        var enemigosArray = grupoEnemigos.getObjects();
@@ -390,6 +396,21 @@ var GameLayer = cc.Layer.extend({
         var capaControles =
             this.getParent().getChildByTag(idCapaControles);
         capaControles.agregarMoneda();
+    },
+    colisionJugadorConGasolina: function (arbiter, space) {
+
+        // Marcar la gasolina para eliminarla
+        var shapes = arbiter.getShapes();
+        // shapes[0] es el jugador
+        this.formasEliminar.push(shapes[1]);
+
+        this.tiempoEfecto = 100;
+
+        var capaControles =
+            this.getParent().getChildByTag(idCapaControles);
+
+        // Incrementar gasolina....
+        
     },
     colisionEnemigoConContenedorGirarDerecha: function (arbiter, space) {
         var shapes = arbiter.getShapes();
