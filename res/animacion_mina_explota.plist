@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>frames</key>
+		<dict>
+			<key>animacion_mina_explota_1.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,50},{28,12}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{28,12}}</string>
+				<key>sourceSize</key>
+				<string>{28,12}</string>
+			</dict>
+
+			<key>animacion_mina_explota_2.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{48,18},{28,12}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{28,12}}</string>
+				<key>sourceSize</key>
+				<string>{28,12}</string>
+			</dict>
+
+			<key>animacion_mina_explota_3.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{29,50},{28,12}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{28,12}}</string>
+				<key>sourceSize</key>
+				<string>{28,12}</string>
+			</dict>
+
+			<key>animacion_mina_explota_4.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{48,31},{28,12}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{28,12}}</string>
+				<key>sourceSize</key>
+				<string>{28,12}</string>
+			</dict>
+
+			<key>animacion_mina_explota_5.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{48,0},{34,17}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{34,17}}</string>
+				<key>sourceSize</key>
+				<string>{34,17}</string>
+			</dict>
+
+			<key>animacion_mina_explota_6.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,25},{47,24}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{47,24}}</string>
+				<key>sourceSize</key>
+				<string>{47,24}</string>
+			</dict>
+
+			<key>animacion_mina_explota_7.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,0},{47,24}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{47,24}}</string>
+				<key>sourceSize</key>
+				<string>{47,24}</string>
+			</dict>
+
+		</dict>
+
+		<key>metadata</key>
+		<dict>
+			<key>format</key>
+			<integer>2</integer>
+			<key>size</key>
+			<string>{128,64}</string>
+			<key>textureFileName</key>
+			<string>animacion_mina_explota.png</string>
+			</dict>
+		</dict>
+</plist>

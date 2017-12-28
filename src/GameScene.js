@@ -2,6 +2,7 @@ var tipoJugador = 1;
 var tipoMoneda = 2;
 var tipoEnemigo = 3;
 var tipoGasolina = 4;
+var tipoMina = 5;
 var tipoContenedorGirarDerecha = 400;
 var tipoContenedorGirarIzquierda = 401;
 var tipoDisparo = 5;
@@ -26,6 +27,7 @@ var GameLayer = cc.Layer.extend({
     teclaBarra: false,
     monedas: [],
     gasolina: [],
+    minas: [],
     jugador: null,
     coche: null,
     space: null,
@@ -45,6 +47,7 @@ var GameLayer = cc.Layer.extend({
         cc.spriteFrameCache.addSpriteFrames(res.playershootright_plist);
         cc.spriteFrameCache.addSpriteFrames(res.orc_car_plist);
         cc.spriteFrameCache.addSpriteFrames(res.gas_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.animacion_mina_normal_plist);
 
         // Inicializar Space
         this.space = new cp.Space();
@@ -80,6 +83,10 @@ var GameLayer = cc.Layer.extend({
         // jugador y gasolina
         this.space.addCollisionHandler(tipoJugador, tipoGasolina,
             null, this.colisionJugadorConGasolina.bind(this), null, null);
+
+        // jugador y mina
+        this.space.addCollisionHandler(tipoJugador, tipoMina,
+            null, this.colisionJugadorConMina.bind(this), null, null);
 
         // enemigo y contenedor
         // IMPORTANTE: Invocamos el método antes de resolver la colisión (realmente no habrá colisión).
@@ -150,6 +157,13 @@ var GameLayer = cc.Layer.extend({
                 if (this.gasolina[r].shape == shape) {
                     this.gasolina[r].eliminar();
                     this.gasolina.splice(r, 1);
+                }
+            }
+
+            for (var r = 0; r < this.minas.length; r++) {
+                if (this.minas[r].shape == shape) {
+                    this.minas[r].eliminar();
+                    this.minas.splice(r, 1);
                 }
             }
         }
@@ -287,6 +301,16 @@ var GameLayer = cc.Layer.extend({
 
            this.gasolina.push(gas);
        }
+
+       var grupoMinas = this.mapa.getObjectGroup("Minas");
+       var minaArray = grupoMinas.getObjects();
+       for (var i = 0; i < minaArray.length; i++) {
+           var mina = new Mina(this.space,
+               cc.p(minaArray[i]["x"],minaArray[i]["y"]),
+               this);
+
+           this.minas.push(mina);
+       }
 /*
        var grupoEnemigos = this.mapa.getObjectGroup("Enemigos");
        var enemigosArray = grupoEnemigos.getObjects();
@@ -415,6 +439,22 @@ var GameLayer = cc.Layer.extend({
 
         // Incrementar gasolina....
         capaControles.incrementarGasolina();
+        
+    },
+    colisionJugadorConMina: function (arbiter, space) {
+
+        // Marcar la gasolina para eliminarla
+        var shapes = arbiter.getShapes();
+        // shapes[0] es el jugador
+        this.formasEliminar.push(shapes[1]);
+
+        this.tiempoEfecto = 100;
+
+        var capaControles =
+            this.getParent().getChildByTag(idCapaControles);
+
+        // Explosion de mina, derrota del jugador y reseteo del nivel
+        
         
     },
     colisionEnemigoConContenedorGirarDerecha: function (arbiter, space) {
