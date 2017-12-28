@@ -1,4 +1,6 @@
 var intervalo = null;
+var porcentaje = 0;
+var INITIAL_GAS = 70;
 var ControlesLayer = cc.Layer.extend({
     etiquetaMonedas: null,
     monedas: 0,
@@ -7,6 +9,7 @@ var ControlesLayer = cc.Layer.extend({
     spriteBotonFrenar: null,
     spriteMarcadorMonedas: null,
     spriteBanderaMeta: null,
+    spriteBidonGasolina: null,
     barraGasolina: null,
     mouseDown: false,
     ctor: function () {
@@ -48,11 +51,15 @@ var ControlesLayer = cc.Layer.extend({
         this.addChild(this.etiquetaMetros);
 
         // Barra gasolina
+        this.spriteBidonGasolina = cc.Sprite.create(res.gas_tank);
+        this.spriteBidonGasolina.setPosition(
+            cc.p(size.width * 0.03, size.height * 0.86));
         this.barraGasolina = ccui.LoadingBar.create();
         this.barraGasolina.loadTexture(res.progressBar_png);
-        this.barraGasolina.setPercent(100);
-        this.barraGasolina.x = size.width * 0.08;
+        this.barraGasolina.setPercent(INITIAL_GAS);
+        this.barraGasolina.x = size.width * 0.15;
         this.barraGasolina.y = size.height * 0.86;
+        this.addChild(this.spriteBidonGasolina);
         this.addChild(this.barraGasolina);
 
         // Registrar Mouse Down
@@ -62,12 +69,15 @@ var ControlesLayer = cc.Layer.extend({
             onMouseUp: this.onMouseUp
         }, this)
 
-        //this.scheduleUpdate();
+        this.scheduleUpdate();
 
         return true;
     },
     update: function (dt) {
-        this.barraGasolina.setPercent(0);
+        porcentaje++;
+        if (porcentaje % 10 === 0){
+            this.barraGasolina.setPercent(this.barraGasolina.getPercent() - 1);
+        }
     },
     agregarMoneda: function () {
         this.monedas = this.monedas + 1;
@@ -80,10 +90,11 @@ var ControlesLayer = cc.Layer.extend({
         }
     },
     resetearMarcadores: function () {
-        this.etiquetaMonedas.setString(0);
         this.monedas = 0;
-        this.etiquetaMetros.setString(0);
+        this.etiquetaMonedas.setString(this.monedas);
         this.metros = 0;
+        this.etiquetaMetros.setString(this.metros);
+        this.barraGasolina.setPercent(INITIAL_GAS);
     },
     incrementarGasolina: function () {
         if (this.barraGasolina.getPercent() >= 75) {
@@ -128,5 +139,8 @@ var ControlesLayer = cc.Layer.extend({
             this.mouseDown = false;
             clearInterval(intervalo)
         }
-    }
+    },
+    getBarraGasolina() {
+        return this.barraGasolina;
+    },
 });

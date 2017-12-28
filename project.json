@@ -21,6 +21,7 @@
         "src/ControlesLayer.js",
         "src/Coche.js",
         "src/Gasolina.js",
-        "src/Mina.js"
+        "src/Mina.js",
+        "src/GameOverLayer.js"
     ]
 }

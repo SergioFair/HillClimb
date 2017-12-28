@@ -7,7 +7,9 @@ var tipoContenedorGirarDerecha = 400;
 var tipoContenedorGirarIzquierda = 401;
 var tipoDisparo = 5;
 var tipoSuelo = 6;
-var START_X = 250, START_Y = 300;
+var START_X = 250,
+    START_Y = 300;
+var GAS = "Te has quedado sin gasolina";
 
 //var niveles = [ res.mapa1_tmx , res.mapa2_tmx ];
 var niveles = [res.mapa_prueba];
@@ -112,6 +114,8 @@ var GameLayer = cc.Layer.extend({
     update: function (dt) {
         this.space.step(dt);
 
+        this.coche.body.w *= 0.5;
+
         var capaControles =
             this.getParent().getChildByTag(idCapaControles);
 
@@ -208,8 +212,19 @@ var GameLayer = cc.Layer.extend({
             //this.jugador.moverDerecha();
             this.coche.moverDerecha();
         }
-        if (this.coche.body.vx > 0){
-            capaControles.incrementarMetros(Math.round(this.coche.body.p.x)-START_X);
+        if (this.coche.body.vx > 0) {
+            capaControles.incrementarMetros(Math.round(this.coche.body.p.x) - START_X);
+        }
+
+        if (!this.teclaDerecha && !this.teclaIzquierda) {
+            if (this.coche.body.vx > 0)
+                this.coche.body.vx--;
+            else if (this.coche.body.vx < 0)
+                this.coche.body.vx++;
+        }
+
+        if (capaControles.getBarraGasolina().getPercent() == 0) {
+            this.getParent().addChild(new GameOverLayer(GAS));
         }
         /*if (!this.teclaIzquierda && !this.teclaDerecha) {
             this.coche.body.vx = 0;
@@ -282,95 +297,95 @@ var GameLayer = cc.Layer.extend({
             }
         }
 
-       var grupoMonedas = this.mapa.getObjectGroup("Monedas");
-       var monedasArray = grupoMonedas.getObjects();
-       for (var i = 0; i < monedasArray.length; i++) {
-           var moneda = new Moneda(this.space,
-               cc.p(monedasArray[i]["x"],monedasArray[i]["y"]),
-               this);
+        var grupoMonedas = this.mapa.getObjectGroup("Monedas");
+        var monedasArray = grupoMonedas.getObjects();
+        for (var i = 0; i < monedasArray.length; i++) {
+            var moneda = new Moneda(this.space,
+                cc.p(monedasArray[i]["x"], monedasArray[i]["y"]),
+                this);
 
-           this.monedas.push(moneda);
-       }
+            this.monedas.push(moneda);
+        }
 
-       var grupoGasolina = this.mapa.getObjectGroup("Gasolina");
-       var gasolinaArray = grupoGasolina.getObjects();
-       for (var i = 0; i < gasolinaArray.length; i++) {
-           var gas = new Gasolina(this.space,
-               cc.p(gasolinaArray[i]["x"],gasolinaArray[i]["y"]),
-               this);
+        var grupoGasolina = this.mapa.getObjectGroup("Gasolina");
+        var gasolinaArray = grupoGasolina.getObjects();
+        for (var i = 0; i < gasolinaArray.length; i++) {
+            var gas = new Gasolina(this.space,
+                cc.p(gasolinaArray[i]["x"], gasolinaArray[i]["y"]),
+                this);
 
-           this.gasolina.push(gas);
-       }
+            this.gasolina.push(gas);
+        }
 
-       var grupoMinas = this.mapa.getObjectGroup("Minas");
-       var minaArray = grupoMinas.getObjects();
-       for (var i = 0; i < minaArray.length; i++) {
-           var mina = new Mina(this.space,
-               cc.p(minaArray[i]["x"],minaArray[i]["y"]),
-               this);
+        var grupoMinas = this.mapa.getObjectGroup("Minas");
+        var minaArray = grupoMinas.getObjects();
+        for (var i = 0; i < minaArray.length; i++) {
+            var mina = new Mina(this.space,
+                cc.p(minaArray[i]["x"], minaArray[i]["y"]),
+                this);
 
-           this.minas.push(mina);
-       }
-/*
-       var grupoEnemigos = this.mapa.getObjectGroup("Enemigos");
-       var enemigosArray = grupoEnemigos.getObjects();
-       for (var i = 0; i < enemigosArray.length; i++) {
-           var enemigo = new Enemigo(this.space,
-               cc.p(enemigosArray[i]["x"],enemigosArray[i]["y"]),
-               this);
+            this.minas.push(mina);
+        }
+        /*
+               var grupoEnemigos = this.mapa.getObjectGroup("Enemigos");
+               var enemigosArray = grupoEnemigos.getObjects();
+               for (var i = 0; i < enemigosArray.length; i++) {
+                   var enemigo = new Enemigo(this.space,
+                       cc.p(enemigosArray[i]["x"],enemigosArray[i]["y"]),
+                       this);
 
-           this.enemigos.push(enemigo);
-           console.log("Enemigo agregado");
-       }
+                   this.enemigos.push(enemigo);
+                   console.log("Enemigo agregado");
+               }
 
-       var grupoContenedoresGirarDerecha = this.mapa.getObjectGroup("ContenedoresGirarDerecha");
-       var contenedoresGirarDerechaArray = grupoContenedoresGirarDerecha.getObjects();
-       for (var i = 0; i < contenedoresGirarDerechaArray.length; i++) {
-           var contenedor = contenedoresGirarDerechaArray[i];
-           var puntos = contenedor.polylinePoints;
+               var grupoContenedoresGirarDerecha = this.mapa.getObjectGroup("ContenedoresGirarDerecha");
+               var contenedoresGirarDerechaArray = grupoContenedoresGirarDerecha.getObjects();
+               for (var i = 0; i < contenedoresGirarDerechaArray.length; i++) {
+                   var contenedor = contenedoresGirarDerechaArray[i];
+                   var puntos = contenedor.polylinePoints;
 
-           for(var j = 0; j < puntos.length - 1; j++){
-               var bodyContenedor = new cp.StaticBody();
+                   for(var j = 0; j < puntos.length - 1; j++){
+                       var bodyContenedor = new cp.StaticBody();
 
-               var shapeContenedor = new cp.SegmentShape(bodyContenedor,
-                   cp.v(parseInt(contenedor.x) + parseInt(puntos[j].x),
-                       parseInt(contenedor.y) - parseInt(puntos[j].y)),
-                   cp.v(parseInt(contenedor.x) + parseInt(puntos[j + 1].x),
-                       parseInt(contenedor.y) - parseInt(puntos[j + 1].y)),
-                   5);
+                       var shapeContenedor = new cp.SegmentShape(bodyContenedor,
+                           cp.v(parseInt(contenedor.x) + parseInt(puntos[j].x),
+                               parseInt(contenedor.y) - parseInt(puntos[j].y)),
+                           cp.v(parseInt(contenedor.x) + parseInt(puntos[j + 1].x),
+                               parseInt(contenedor.y) - parseInt(puntos[j + 1].y)),
+                           5);
 
-               shapeContenedor.setSensor(true);
-               shapeContenedor.setCollisionType(tipoContenedorGirarDerecha);
-               shapeContenedor.setFriction(1);
+                       shapeContenedor.setSensor(true);
+                       shapeContenedor.setCollisionType(tipoContenedorGirarDerecha);
+                       shapeContenedor.setFriction(1);
 
-               this.space.addStaticShape(shapeContenedor);
-           }
-       }
+                       this.space.addStaticShape(shapeContenedor);
+                   }
+               }
 
 
-      var grupoContenedoresGirarIzquierda = this.mapa.getObjectGroup("ContenedoresGirarIzquierda");
-      var contenedoresGirarIzquierdaArray = grupoContenedoresGirarIzquierda.getObjects();
-      for (var i = 0; i < contenedoresGirarIzquierdaArray.length; i++) {
-          var contenedor = contenedoresGirarIzquierdaArray[i];
-          var puntos = contenedor.polylinePoints;
+              var grupoContenedoresGirarIzquierda = this.mapa.getObjectGroup("ContenedoresGirarIzquierda");
+              var contenedoresGirarIzquierdaArray = grupoContenedoresGirarIzquierda.getObjects();
+              for (var i = 0; i < contenedoresGirarIzquierdaArray.length; i++) {
+                  var contenedor = contenedoresGirarIzquierdaArray[i];
+                  var puntos = contenedor.polylinePoints;
 
-          for(var j = 0; j < puntos.length - 1; j++){
-              var bodyContenedor = new cp.StaticBody();
+                  for(var j = 0; j < puntos.length - 1; j++){
+                      var bodyContenedor = new cp.StaticBody();
 
-              var shapeContenedor = new cp.SegmentShape(bodyContenedor,
-                  cp.v(parseInt(contenedor.x) + parseInt(puntos[j].x),
-                      parseInt(contenedor.y) - parseInt(puntos[j].y)),
-                  cp.v(parseInt(contenedor.x) + parseInt(puntos[j + 1].x),
-                      parseInt(contenedor.y) - parseInt(puntos[j + 1].y)),
-                  5);
+                      var shapeContenedor = new cp.SegmentShape(bodyContenedor,
+                          cp.v(parseInt(contenedor.x) + parseInt(puntos[j].x),
+                              parseInt(contenedor.y) - parseInt(puntos[j].y)),
+                          cp.v(parseInt(contenedor.x) + parseInt(puntos[j + 1].x),
+                              parseInt(contenedor.y) - parseInt(puntos[j + 1].y)),
+                          5);
 
-              shapeContenedor.setSensor(true);
-              shapeContenedor.setCollisionType(tipoContenedorGirarIzquierda);
-              shapeContenedor.setFriction(1);
+                      shapeContenedor.setSensor(true);
+                      shapeContenedor.setCollisionType(tipoContenedorGirarIzquierda);
+                      shapeContenedor.setFriction(1);
 
-              this.space.addStaticShape(shapeContenedor);
-          }
-      }*/
+                      this.space.addStaticShape(shapeContenedor);
+                  }
+              }*/
     },
     teclaPulsada: function (keyCode, event) {
         var instancia = event.getCurrentTarget();
@@ -439,7 +454,7 @@ var GameLayer = cc.Layer.extend({
 
         // Incrementar gasolina....
         capaControles.incrementarGasolina();
-        
+
     },
     colisionJugadorConMina: function (arbiter, space) {
 
@@ -454,8 +469,8 @@ var GameLayer = cc.Layer.extend({
             this.getParent().getChildByTag(idCapaControles);
 
         // Explosion de mina, derrota del jugador y reseteo del nivel
-        
-        
+
+
     },
     colisionEnemigoConContenedorGirarDerecha: function (arbiter, space) {
         var shapes = arbiter.getShapes();
