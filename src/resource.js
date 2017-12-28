@@ -54,7 +54,7 @@ var res = {
     gas_plist : "res/gas.plist",
     mapa_prueba: "res/Prueba.tmx",
     flag_png : "res/flag.png",
-    progressBarr_png: "res/progressBar.png",
+    progressBar_png: "res/progressBar.png",
 };
 
 var g_resources = [];

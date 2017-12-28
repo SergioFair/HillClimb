@@ -50,9 +50,9 @@ var ControlesLayer = cc.Layer.extend({
         // Barra gasolina
         this.barraGasolina = ccui.LoadingBar.create();
         this.barraGasolina.loadTexture(res.progressBar_png);
-        this.barraGasolina.x = size.width / 2;
-        this.barraGasolina.y = size.height * 0.9;
-        this.barraGasolina.setPercent(0);
+        this.barraGasolina.setPercent(100);
+        this.barraGasolina.x = size.width * 0.08;
+        this.barraGasolina.y = size.height * 0.86;
         this.addChild(this.barraGasolina);
 
         // Registrar Mouse Down
@@ -62,7 +62,7 @@ var ControlesLayer = cc.Layer.extend({
             onMouseUp: this.onMouseUp
         }, this)
 
-        this.scheduleUpdate();
+        //this.scheduleUpdate();
 
         return true;
     },
