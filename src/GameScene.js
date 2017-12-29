@@ -207,10 +207,12 @@ var GameLayer = cc.Layer.extend({
         if (this.teclaIzquierda) {
             //this.jugador.moverIzquierda();
             this.coche.moverIzquierda();
+            capaControles.actualizarGasolina();
         }
         if (this.teclaDerecha) {
             //this.jugador.moverDerecha();
             this.coche.moverDerecha();
+            capaControles.actualizarGasolina();
         }
         if (this.coche.body.vx > 0) {
             capaControles.incrementarMetros(Math.round(this.coche.body.p.x) - START_X);
