@@ -3,6 +3,7 @@ var Mina = cc.Class.extend({
     sprite:null,
     shape:null,
     layer:null,
+    animacionExplotar:null,
 ctor:function (space, posicion, layer) {
     this.space = space;
     this.layer = layer;
@@ -16,6 +17,17 @@ ctor:function (space, posicion, layer) {
     }
     var animacion = new cc.Animation(framesAnimacion, 0.2);
     var actionAnimacionBucle =
+        new cc.RepeatForever(new cc.Animate(animacion));
+
+    // Crear animación - explotar
+    var framesAnimacion = [];
+    for (var i = 1; i <= 7; i++) {
+        var str = "animacion_mina_explota" + i + ".png";
+        var frame = cc.spriteFrameCache.getSpriteFrame(str);
+        framesAnimacion.push(frame);
+    }
+    var animacion = new cc.Animation(framesAnimacion, 0.2);
+    this.animacionExplotar = 
         new cc.RepeatForever(new cc.Animate(animacion));
 
     // Crear Sprite - Cuerpo y forma
@@ -49,5 +61,8 @@ ctor:function (space, posicion, layer) {
 
       // quita el sprite
       this.layer.removeChild(this.sprite);
+   }, explotar: function() {
+        this.sprite.stopAllActions();
+        this.sprite.runAction(this.animacionExplotar);
    }
 });

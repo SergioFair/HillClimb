@@ -50,6 +50,7 @@ var GameLayer = cc.Layer.extend({
         cc.spriteFrameCache.addSpriteFrames(res.orc_car_plist);
         cc.spriteFrameCache.addSpriteFrames(res.gas_plist);
         cc.spriteFrameCache.addSpriteFrames(res.animacion_mina_normal_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.animacion_mina_normal_plist);
 
         // Inicializar Space
         this.space = new cp.Space();
@@ -460,7 +461,7 @@ var GameLayer = cc.Layer.extend({
     },
     colisionJugadorConMina: function (arbiter, space) {
 
-        // Marcar la gasolina para eliminarla
+        // Marcar la mina para eliminarla
         var shapes = arbiter.getShapes();
         // shapes[0] es el jugador
         this.formasEliminar.push(shapes[1]);
@@ -471,7 +472,10 @@ var GameLayer = cc.Layer.extend({
             this.getParent().getChildByTag(idCapaControles);
 
         // Explosion de mina, derrota del jugador y reseteo del nivel
-
+        console.log(this.minas[0]);
+        this.minas[0].explotar();
+        //this.getParent().addChild(new GameOverLayer(GAS));
+        //capaControles.resetearMarcadores();
 
     },
     colisionEnemigoConContenedorGirarDerecha: function (arbiter, space) {

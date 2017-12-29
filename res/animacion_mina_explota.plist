@@ -4,7 +4,7 @@
 	<dict>
 		<key>frames</key>
 		<dict>
-			<key>animacion_mina_explota_1.png</key>
+			<key>animacion_mina_explota1.png</key>
 			<dict>
 				<key>frame</key>
 				<string>{{0,50},{28,12}}</string>
@@ -18,7 +18,7 @@
 				<string>{28,12}</string>
 			</dict>
 
-			<key>animacion_mina_explota_2.png</key>
+			<key>animacion_mina_explota2.png</key>
 			<dict>
 				<key>frame</key>
 				<string>{{48,18},{28,12}}</string>
@@ -32,7 +32,7 @@
 				<string>{28,12}</string>
 			</dict>
 
-			<key>animacion_mina_explota_3.png</key>
+			<key>animacion_mina_explota3.png</key>
 			<dict>
 				<key>frame</key>
 				<string>{{29,50},{28,12}}</string>
@@ -46,7 +46,7 @@
 				<string>{28,12}</string>
 			</dict>
 
-			<key>animacion_mina_explota_4.png</key>
+			<key>animacion_mina_explota4.png</key>
 			<dict>
 				<key>frame</key>
 				<string>{{48,31},{28,12}}</string>
@@ -60,7 +60,7 @@
 				<string>{28,12}</string>
 			</dict>
 
-			<key>animacion_mina_explota_5.png</key>
+			<key>animacion_mina_explota5.png</key>
 			<dict>
 				<key>frame</key>
 				<string>{{48,0},{34,17}}</string>
@@ -74,7 +74,7 @@
 				<string>{34,17}</string>
 			</dict>
 
-			<key>animacion_mina_explota_6.png</key>
+			<key>animacion_mina_explota6.png</key>
 			<dict>
 				<key>frame</key>
 				<string>{{0,25},{47,24}}</string>
@@ -88,7 +88,7 @@
 				<string>{47,24}</string>
 			</dict>
 
-			<key>animacion_mina_explota_7.png</key>
+			<key>animacion_mina_explota7.png</key>
 			<dict>
 				<key>frame</key>
 				<string>{{0,0},{47,24}}</string>

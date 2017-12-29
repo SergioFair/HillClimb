@@ -58,7 +58,9 @@ var res = {
     flag_png : "res/flag.png",
     progressBar_png: "res/progressBar.png",
     animacion_mina_normal_png : "res/animacion_mina_normal.png",
-    animacion_mina_normal_plist : "res/animacion_mina_normal.plist"
+    animacion_mina_normal_plist : "res/animacion_mina_normal.plist",
+    animacion_mina_explota_png : "res/animacion_mina_explota.png",
+    animacion_mina_explota_plist : "res/animacion_mina_explota.plist"
 };
 
 var g_resources = [];
