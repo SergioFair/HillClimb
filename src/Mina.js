@@ -20,13 +20,13 @@ ctor:function (space, posicion, layer) {
         new cc.RepeatForever(new cc.Animate(animacion));
 
     // Crear animación - explotar
-    var framesAnimacion = [];
+    framesAnimacion = [];
     for (var i = 1; i <= 7; i++) {
         var str = "animacion_mina_explota" + i + ".png";
         var frame = cc.spriteFrameCache.getSpriteFrame(str);
         framesAnimacion.push(frame);
     }
-    var animacion = new cc.Animation(framesAnimacion, 0.2);
+    animacion = new cc.Animation(framesAnimacion, 0.2);
     this.animacionExplotar = 
         new cc.RepeatForever(new cc.Animate(animacion));
 
@@ -50,7 +50,7 @@ ctor:function (space, posicion, layer) {
     // ejecutar la animación
     this.sprite.runAction(actionAnimacionBucle);
 
-    layer.addChild(this.sprite,10);
+    this.layer.addChild(this.sprite,10);
    }, eliminar: function (){
       // quita la forma
       this.space.removeShape(this.shape);
@@ -64,5 +64,10 @@ ctor:function (space, posicion, layer) {
    }, explotar: function() {
         this.sprite.stopAllActions();
         this.sprite.runAction(this.animacionExplotar);
+        var _this = this;
+
+        var time = setTimeout(function(){
+            _this.eliminar();
+        }, 2000);
    }
 });

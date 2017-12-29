@@ -22,6 +22,7 @@
         "src/Coche.js",
         "src/Gasolina.js",
         "src/Mina.js",
-        "src/GameOverLayer.js"
+        "src/GameOverLayer.js",
+        "src/Caja.js"
     ]
 }

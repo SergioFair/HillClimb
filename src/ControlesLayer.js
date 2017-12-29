@@ -69,20 +69,12 @@ var ControlesLayer = cc.Layer.extend({
             onMouseUp: this.onMouseUp
         }, this)
 
-        this.scheduleUpdate();
-
         return true;
-    },
-    update: function (dt) {
-        /*porcentaje++;
-        if (porcentaje % 10 === 0){
-            this.barraGasolina.setPercent(this.barraGasolina.getPercent() - 1);
-        }*/
     },
     actualizarGasolina: function () {
         console.log(this.barraGasolina.getPercent());
         porcentaje++;
-        if (porcentaje % 10 === 0){
+        if (porcentaje % 10 === 0) {
             this.barraGasolina.setPercent(this.barraGasolina.getPercent() - 1);
         }
     },

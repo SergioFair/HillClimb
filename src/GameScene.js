@@ -3,13 +3,15 @@ var tipoMoneda = 2;
 var tipoEnemigo = 3;
 var tipoGasolina = 4;
 var tipoMina = 5;
+var tipoCaja = 6;
 var tipoContenedorGirarDerecha = 400;
 var tipoContenedorGirarIzquierda = 401;
-var tipoDisparo = 5;
-var tipoSuelo = 6;
-var START_X = 250,
-    START_Y = 300;
+var tipoDisparo = 7;
+var tipoSuelo = 8;
+var START_X = 250;
+var START_Y = 300;
 var GAS = "Te has quedado sin gasolina";
+var MINA = "Has chocado con una mina";
 
 //var niveles = [ res.mapa1_tmx , res.mapa2_tmx ];
 var niveles = [res.mapa_prueba];
@@ -30,6 +32,7 @@ var GameLayer = cc.Layer.extend({
     monedas: [],
     gasolina: [],
     minas: [],
+    cajas: [],
     jugador: null,
     coche: null,
     space: null,
@@ -50,7 +53,8 @@ var GameLayer = cc.Layer.extend({
         cc.spriteFrameCache.addSpriteFrames(res.orc_car_plist);
         cc.spriteFrameCache.addSpriteFrames(res.gas_plist);
         cc.spriteFrameCache.addSpriteFrames(res.animacion_mina_normal_plist);
-        cc.spriteFrameCache.addSpriteFrames(res.animacion_mina_normal_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.animacion_mina_explota_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.animacion_cocodrilo_plist);
 
         // Inicializar Space
         this.space = new cp.Space();
@@ -90,6 +94,10 @@ var GameLayer = cc.Layer.extend({
         // jugador y mina
         this.space.addCollisionHandler(tipoJugador, tipoMina,
             null, this.colisionJugadorConMina.bind(this), null, null);
+
+        // jugador y caja
+        this.space.addCollisionHandler(tipoJugador, tipoCaja,
+            null, this.colisionJugadorConCaja.bind(this), null, null);
 
         // enemigo y contenedor
         // IMPORTANTE: Invocamos el método antes de resolver la colisión (realmente no habrá colisión).
@@ -171,6 +179,13 @@ var GameLayer = cc.Layer.extend({
                     this.minas.splice(r, 1);
                 }
             }
+
+            for (var r = 0; r < this.cajas.length; r++) {
+                if (this.cajas[r].shape == shape) {
+                    this.cajas[r].eliminar();
+                    this.cajas.splice(r, 1);
+                }
+            }
         }
 
         this.formasEliminar = [];
@@ -218,12 +233,17 @@ var GameLayer = cc.Layer.extend({
         if (this.coche.body.vx > 0) {
             capaControles.incrementarMetros(Math.round(this.coche.body.p.x) - START_X);
         }
+        if (this.coche.body.vx > 1 || this.coche.body.vx < -1) {
+            capaControles.actualizarGasolina();
+        }
 
         if (!this.teclaDerecha && !this.teclaIzquierda) {
-            if (this.coche.body.vx > 0)
+            if (this.coche.body.vx > 1)
                 this.coche.body.vx--;
-            else if (this.coche.body.vx < 0)
+            else if (this.coche.body.vx < -1)
                 this.coche.body.vx++;
+            else
+                this.coche.body.vx = 0;
         }
 
         if (capaControles.getBarraGasolina().getPercent() == 0) {
@@ -328,6 +348,16 @@ var GameLayer = cc.Layer.extend({
                 this);
 
             this.minas.push(mina);
+        }
+
+        var grupoCajas = this.mapa.getObjectGroup("Cajas");
+        var cajasArray = grupoCajas.getObjects();
+        for (var i = 0; i < cajasArray.length; i++) {
+            var caja = new Caja(this.space,
+                cc.p(cajasArray[i]["x"], cajasArray[i]["y"]+10),
+                this);
+
+            this.cajas.push(caja);
         }
         /*
                var grupoEnemigos = this.mapa.getObjectGroup("Enemigos");
@@ -464,7 +494,8 @@ var GameLayer = cc.Layer.extend({
         // Marcar la mina para eliminarla
         var shapes = arbiter.getShapes();
         // shapes[0] es el jugador
-        this.formasEliminar.push(shapes[1]);
+        this.minas[0].explotar();
+        //this.formasEliminar.push(shapes[1]);
 
         this.tiempoEfecto = 100;
 
@@ -472,11 +503,28 @@ var GameLayer = cc.Layer.extend({
             this.getParent().getChildByTag(idCapaControles);
 
         // Explosion de mina, derrota del jugador y reseteo del nivel
-        console.log(this.minas[0]);
-        this.minas[0].explotar();
-        //this.getParent().addChild(new GameOverLayer(GAS));
+        //console.log(this.minas[0]);
+        this.getParent().addChild(new GameOverLayer(MINA));
         //capaControles.resetearMarcadores();
 
+    },
+    colisionJugadorConCaja: function (arbiter, space) {
+        // Marcar la caja para eliminarla
+        var shapes = arbiter.getShapes();
+        // shapes[0] es el jugador
+        this.formasEliminar.push(shapes[1]);
+
+        this.tiempoEfecto = 100;
+
+        var capaControles =
+            this.getParent().getChildByTag(idCapaControles);
+
+        this.coche.body.vx = 0;
+        this.coche.body.applyImpulse(cp.v(-10000, 0), cp.v(0, 0));
+
+        // Explosion de caja, derrota del jugador y reseteo del nivel
+        //console.log(this.cajas[0]);
+        //capaControles.resetearMarcadores();
     },
     colisionEnemigoConContenedorGirarDerecha: function (arbiter, space) {
         var shapes = arbiter.getShapes();

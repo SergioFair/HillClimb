@@ -60,7 +60,9 @@ var res = {
     animacion_mina_normal_png : "res/animacion_mina_normal.png",
     animacion_mina_normal_plist : "res/animacion_mina_normal.plist",
     animacion_mina_explota_png : "res/animacion_mina_explota.png",
-    animacion_mina_explota_plist : "res/animacion_mina_explota.plist"
+    animacion_mina_explota_plist : "res/animacion_mina_explota.plist",
+    animacion_cocodrilo_plist : "res/animacion_cocodrilo.plist",
+    animacion_cocodrilo_png : "res/animacion_cocodrilo.png"
 };
 
 var g_resources = [];
