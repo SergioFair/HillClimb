@@ -7,7 +7,7 @@ var Caja = cc.Class.extend({
         this.space = space;
         this.layer = layer;
         // Crear Sprite - Cuerpo y forma
-        this.sprite = new cc.PhysicsSprite("#cocodrilo1.png");
+        this.sprite = new cc.PhysicsSprite("#caja1.png");
         // Cuerpo estática , no le afectan las fuerzas
         var body = new cp.StaticBody();
         body.setPos(posicion);

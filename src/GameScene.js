@@ -35,6 +35,7 @@ var GameLayer = cc.Layer.extend({
     cajas: [],
     jugador: null,
     coche: null,
+    rana: null,
     space: null,
     ctor: function () {
         this._super();
@@ -55,6 +56,8 @@ var GameLayer = cc.Layer.extend({
         cc.spriteFrameCache.addSpriteFrames(res.animacion_mina_normal_plist);
         cc.spriteFrameCache.addSpriteFrames(res.animacion_mina_explota_plist);
         cc.spriteFrameCache.addSpriteFrames(res.animacion_cocodrilo_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.caja_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.rana_plist);
 
         // Inicializar Space
         this.space = new cp.Space();
@@ -72,6 +75,7 @@ var GameLayer = cc.Layer.extend({
         /*this.jugador = new Jugador(this.space,
                cc.p(100,250), this);*/
         this.coche = new Coche(this.space, cc.p(START_X, START_Y), this);
+        this.rana = new Rana(this.space, cc.p(300, 300), this);
 
         cc.eventManager.addListener({
             event: cc.EventListener.KEYBOARD,

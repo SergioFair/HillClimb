@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="20" tilewidth="32" tileheight="32" nextobjectid="14">
- <tileset firstgid="1" name="tiles32" tilewidth="32" tileheight="32" tilecount="98">
+ <tileset firstgid="1" name="tiles32" tilewidth="32" tileheight="32" tilecount="98" columns="14">
   <image source="tiles32.png" width="448" height="224"/>
  </tileset>
  <layer name="PatronesFondo" width="500" height="20">
@@ -30,6 +30,6 @@
   <object id="9" x="1032" y="368" width="40" height="40"/>
  </objectgroup>
  <objectgroup name="Cajas">
-  <object id="13" x="1135" y="366" width="40" height="40"/>
+  <object id="13" x="652" y="363" width="40" height="40"/>
  </objectgroup>
 </map>
