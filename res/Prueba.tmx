@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="20" tilewidth="32" tileheight="32" nextobjectid="14">
- <tileset firstgid="1" name="tiles32" tilewidth="32" tileheight="32" tilecount="98" columns="14">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="20" tilewidth="32" tileheight="32" nextobjectid="19">
+ <tileset firstgid="1" name="tiles32" tilewidth="32" tileheight="32" tilecount="98">
   <image source="tiles32.png" width="448" height="224"/>
  </tileset>
  <layer name="PatronesFondo" width="500" height="20">
@@ -31,5 +31,16 @@
  </objectgroup>
  <objectgroup name="Cajas">
   <object id="13" x="652" y="363" width="40" height="40"/>
+ </objectgroup>
+ <objectgroup name="Contenedor">
+  <object id="15" x="90" y="400">
+   <polyline points="0,0 0,-77"/>
+  </object>
+  <object id="16" x="210" y="400">
+   <polyline points="0,0 -1,-79"/>
+  </object>
+  <object id="18" x="90" y="400">
+   <polyline points="0,0 119,0"/>
+  </object>
  </objectgroup>
 </map>

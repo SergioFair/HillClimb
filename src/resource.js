@@ -66,7 +66,9 @@ var res = {
     caja_png : "res/caja.png",
     caja_plist : "res/caja.plist",
     rana_png : "res/rana.png",
-    rana_plist : "res/rana.plist"
+    rana_plist : "res/rana.plist",
+    tabla_h: "res/tabla_h.png",
+    tabla_v: "res/tabla_v.png",
 };
 
 var g_resources = [];

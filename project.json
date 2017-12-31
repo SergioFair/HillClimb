@@ -24,6 +24,7 @@
         "src/Mina.js",
         "src/GameOverLayer.js",
         "src/Caja.js",
-        "src/Rana.js"
+        "src/Rana.js",
+        "src/Contenedor.js"
     ]
 }

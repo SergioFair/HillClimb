@@ -4,14 +4,19 @@ var tipoEnemigo = 3;
 var tipoGasolina = 4;
 var tipoMina = 5;
 var tipoCaja = 6;
-var tipoContenedorGirarDerecha = 400;
-var tipoContenedorGirarIzquierda = 401;
 var tipoDisparo = 7;
 var tipoSuelo = 8;
-var START_X = 250;
-var START_Y = 300;
+var tipoRana = 9
+var tipoContenedor = 401;
+var tipoContenedorGirarDerecha = 400;
+var START_X_COCHE = 250;
+var START_Y_COCHE = 300;
+var START_X_RANA = 150;
+var START_Y_RANA = 300;
 var GAS = "Te has quedado sin gasolina";
 var MINA = "Has chocado con una mina";
+var CAIDA = "Te has caído por el precipicio";
+var RANA = "Has perdido a la rana";
 
 //var niveles = [ res.mapa1_tmx , res.mapa2_tmx ];
 var niveles = [res.mapa_prueba];
@@ -33,6 +38,7 @@ var GameLayer = cc.Layer.extend({
     gasolina: [],
     minas: [],
     cajas: [],
+    contenedor: null,
     jugador: null,
     coche: null,
     rana: null,
@@ -74,8 +80,8 @@ var GameLayer = cc.Layer.extend({
 
         /*this.jugador = new Jugador(this.space,
                cc.p(100,250), this);*/
-        this.coche = new Coche(this.space, cc.p(START_X, START_Y), this);
-        this.rana = new Rana(this.space, cc.p(300, 300), this);
+        this.coche = new Coche(this.space, cc.p(START_X_COCHE, START_Y_COCHE), this);
+        this.rana = new Rana(this.space, cc.p(START_X_RANA, START_Y_RANA), this);
 
         cc.eventManager.addListener({
             event: cc.EventListener.KEYBOARD,
@@ -105,11 +111,11 @@ var GameLayer = cc.Layer.extend({
 
         // enemigo y contenedor
         // IMPORTANTE: Invocamos el método antes de resolver la colisión (realmente no habrá colisión).
-        this.space.addCollisionHandler(tipoEnemigo, tipoContenedorGirarDerecha,
-            null, this.colisionEnemigoConContenedorGirarDerecha.bind(this), null, null);
+        /*this.space.addCollisionHandler(tipoEnemigo, tipoContenedorGirarDerecha,
+            null, this.colisionEnemigoConContenedorGirarDerecha.bind(this), null, null);*/
 
-        this.space.addCollisionHandler(tipoEnemigo, tipoContenedorGirarIzquierda,
-            null, this.colisionEnemigoConContenedorGirarIzquierda.bind(this), null, null);
+        this.space.addCollisionHandler(tipoRana, tipoContenedor,
+            null, this.colisionRanaConContenedor.bind(this), null, null);
 
 
         // disparo y enemigo
@@ -128,6 +134,7 @@ var GameLayer = cc.Layer.extend({
         this.space.step(dt);
 
         this.coche.body.w *= 0.5;
+        this.rana.body.w *= 0.5;
 
         var capaControles =
             this.getParent().getChildByTag(idCapaControles);
@@ -201,8 +208,13 @@ var GameLayer = cc.Layer.extend({
 
         // Caída, sí cae vuelve a la posición inicial
         if (this.coche.body.p.y < -100) {
-            this.coche.body.p = cc.p(START_X, START_Y);
-            capaControles.resetearMarcadores();
+            //this.coche.body.p = cc.p(START_X_COCHE, START_Y_COCHE);
+            //capaControles.resetearMarcadores();
+            this.getParent().addChild(new GameOverLayer(CAIDA));
+        }
+
+        if (this.rana.body.p.y < -100) {
+            this.getParent().addChild(new GameOverLayer(RANA));
         }
 
         /*if (this.teclaBarra && new Date().getTime() - this.tiempoDisparar > 1000) {
@@ -235,7 +247,7 @@ var GameLayer = cc.Layer.extend({
             capaControles.actualizarGasolina();
         }
         if (this.coche.body.vx > 0) {
-            capaControles.incrementarMetros(Math.round(this.coche.body.p.x) - START_X);
+            capaControles.incrementarMetros(Math.round(this.coche.body.p.x) - START_X_COCHE);
         }
         if (this.coche.body.vx > 1 || this.coche.body.vx < -1) {
             capaControles.actualizarGasolina();
@@ -358,7 +370,7 @@ var GameLayer = cc.Layer.extend({
         var cajasArray = grupoCajas.getObjects();
         for (var i = 0; i < cajasArray.length; i++) {
             var caja = new Caja(this.space,
-                cc.p(cajasArray[i]["x"], cajasArray[i]["y"]+10),
+                cc.p(cajasArray[i]["x"], cajasArray[i]["y"] + 10),
                 this);
 
             this.cajas.push(caja);
@@ -400,29 +412,8 @@ var GameLayer = cc.Layer.extend({
                }
 
 
-              var grupoContenedoresGirarIzquierda = this.mapa.getObjectGroup("ContenedoresGirarIzquierda");
-              var contenedoresGirarIzquierdaArray = grupoContenedoresGirarIzquierda.getObjects();
-              for (var i = 0; i < contenedoresGirarIzquierdaArray.length; i++) {
-                  var contenedor = contenedoresGirarIzquierdaArray[i];
-                  var puntos = contenedor.polylinePoints;
-
-                  for(var j = 0; j < puntos.length - 1; j++){
-                      var bodyContenedor = new cp.StaticBody();
-
-                      var shapeContenedor = new cp.SegmentShape(bodyContenedor,
-                          cp.v(parseInt(contenedor.x) + parseInt(puntos[j].x),
-                              parseInt(contenedor.y) - parseInt(puntos[j].y)),
-                          cp.v(parseInt(contenedor.x) + parseInt(puntos[j + 1].x),
-                              parseInt(contenedor.y) - parseInt(puntos[j + 1].y)),
-                          5);
-
-                      shapeContenedor.setSensor(true);
-                      shapeContenedor.setCollisionType(tipoContenedorGirarIzquierda);
-                      shapeContenedor.setFriction(1);
-
-                      this.space.addStaticShape(shapeContenedor);
-                  }
-              }*/
+              */
+        this.contenedor = new Contenedor(this.mapa, this.space, this);
     },
     teclaPulsada: function (keyCode, event) {
         var instancia = event.getCurrentTarget();
@@ -530,7 +521,7 @@ var GameLayer = cc.Layer.extend({
         //console.log(this.cajas[0]);
         //capaControles.resetearMarcadores();
     },
-    colisionEnemigoConContenedorGirarDerecha: function (arbiter, space) {
+    /*colisionEnemigoConContenedorGirarDerecha: function (arbiter, space) {
         var shapes = arbiter.getShapes();
         // shapes[0] es el enemigo
         var formaEnemigo = shapes[0];
@@ -540,16 +531,13 @@ var GameLayer = cc.Layer.extend({
                 this.enemigos[i].direccionX = "izquierda";
             }
         }
-    },
-    colisionEnemigoConContenedorGirarIzquierda: function (arbiter, space) {
+    },*/
+    colisionRanaConContenedor: function (arbiter, space) {
         var shapes = arbiter.getShapes();
-        // shapes[0] es el enemigo
-        var formaEnemigo = shapes[0];
-        for (var i = 0; i < this.enemigos.length; i++) {
-            if (this.enemigos[i].shape == formaEnemigo) {
-                this.enemigos[i].body.vx = 0; //parar
-                this.enemigos[i].direccionX = "derecha";
-            }
+        // shapes[0] es la rana
+        var formaRana = shapes[0];
+        if (this.rana.shape == formaRana) {
+            //this.rana.body.applyImpulse(cp.v(0, -this.rana.body.vx), cp.v(0, 0));
         }
     },
     colisionDisparoConEnemigo: function (arbiter, space) {

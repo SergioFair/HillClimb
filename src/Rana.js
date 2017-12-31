@@ -36,13 +36,13 @@ ctor:function (space, posicion, layer) {
         this.sprite.getContentSize().height);
     // agregar forma dinamica
     this.space.addShape(this.shape);
-    this.shape.setCollisionType(tipoEnemigo);
+    this.shape.setCollisionType(tipoRana);
     // añadir sprite a la capa
 
     // ejecutar la animación
     this.sprite.runAction(actionAnimacionBucle);
 
-    layer.addChild(this.sprite,10);
+    this.layer.addChild(this.sprite,10);
 
    }, saltar: function(){
         this.body.applyImpulse(cp.v(0, 100), cp.v(0, 0));
