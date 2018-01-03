@@ -25,6 +25,7 @@
         "src/GameOverLayer.js",
         "src/Caja.js",
         "src/Rana.js",
+        "src/Cuervo.js",
         "src/Contenedor.js"
     ]
 }

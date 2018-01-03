@@ -6,17 +6,17 @@ var tipoMina = 5;
 var tipoCaja = 6;
 var tipoDisparo = 7;
 var tipoSuelo = 8;
-var tipoRana = 9
+var tipoCarga = 9
 var tipoContenedor = 401;
 var tipoContenedor = 400;
 var START_X_COCHE = 250;
 var START_Y_COCHE = 300;
-var START_X_RANA = 150;
-var START_Y_RANA = 300;
+var START_X_CARGA = 150;
+var START_Y_CARGA = 300;
 var GAS = "Te has quedado sin gasolina";
 var MINA = "Has chocado con una mina";
 var CAIDA = "Te has caído por el precipicio";
-var RANA = "Has perdido a la rana";
+var CARGA = "Has perdido la carga";
 
 //var niveles = [ res.mapa1_tmx , res.mapa2_tmx ];
 var niveles = [res.mapa_prueba];
@@ -41,7 +41,7 @@ var GameLayer = cc.Layer.extend({
     contenedor: null,
     jugador: null,
     coche: null,
-    rana: null,
+    carga: null,
     space: null,
     ctor: function () {
         this._super();
@@ -64,6 +64,7 @@ var GameLayer = cc.Layer.extend({
         cc.spriteFrameCache.addSpriteFrames(res.animacion_cocodrilo_plist);
         cc.spriteFrameCache.addSpriteFrames(res.caja_plist);
         cc.spriteFrameCache.addSpriteFrames(res.rana_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.animacion_cuervo_plist);
         cc.spriteFrameCache.addSpriteFrames(res.tabla_plist);
 
         // Inicializar Space
@@ -82,7 +83,8 @@ var GameLayer = cc.Layer.extend({
         /*this.jugador = new Jugador(this.space,
                cc.p(100,250), this);*/
         this.coche = new Coche(this.space, cc.p(START_X_COCHE, START_Y_COCHE), this);
-        this.rana = new Rana(this.space, cc.p(START_X_RANA, START_Y_RANA), this);
+        //this.carga = new Rana(this.space, cc.p(START_X_CARGA, START_Y_CARGA), this);
+        this.carga = new Cuervo(this.space, cc.p(START_X_CARGA, START_Y_CARGA), this);
 
         cc.eventManager.addListener({
             event: cc.EventListener.KEYBOARD,
@@ -115,8 +117,8 @@ var GameLayer = cc.Layer.extend({
         /*this.space.addCollisionHandler(tipoEnemigo, tipoContenedorGirarDerecha,
             null, this.colisionEnemigoConContenedorGirarDerecha.bind(this), null, null);*/
 
-        this.space.addCollisionHandler(tipoRana, tipoContenedor,
-            null, this.colisionRanaConContenedor.bind(this), null, null);
+        this.space.addCollisionHandler(tipoCarga, tipoContenedor,
+            null, this.colisionCargaConContenedor.bind(this), null, null);
 
 
         // disparo y enemigo
@@ -135,7 +137,7 @@ var GameLayer = cc.Layer.extend({
         this.space.step(dt);
 
         this.coche.body.w *= 0.5;
-        this.rana.body.w *= 0.5;
+        this.carga.body.w *= 0.5;
 
         var capaControles =
             this.getParent().getChildByTag(idCapaControles);
@@ -214,8 +216,8 @@ var GameLayer = cc.Layer.extend({
             this.getParent().addChild(new GameOverLayer(CAIDA));
         }
 
-        if (this.rana.body.p.y < -100) {
-            this.getParent().addChild(new GameOverLayer(RANA));
+        if (this.carga.body.p.y < -100) {
+            this.getParent().addChild(new GameOverLayer(CARGA));
         }
 
         /*if (this.teclaBarra && new Date().getTime() - this.tiempoDisparar > 1000) {
@@ -304,11 +306,11 @@ var GameLayer = cc.Layer.extend({
             this.coche.body.vx = 200;
         }
 
-        if (this.rana.body.y > START_Y_RANA)
-            this.rana.body.vx = 0;
+        if (this.carga.body.y > START_Y_CARGA)
+            this.carga.body.vx = 0;
 
-        if(this.rana.body.x !== this.contenedor.x){
-            this.rana.body.vx = 0;
+        if(this.carga.body.x !== this.contenedor.x){
+            this.carga.body.vx = 0;
         }
 
         this.contenedor.body.vx = this.coche.body.vx;
@@ -422,7 +424,7 @@ var GameLayer = cc.Layer.extend({
                 this.space.addStaticShape(shapeContenedor);
             }
         }*/
-        this.contenedor = new Contenedor(this.space, cc.p(START_X_RANA, START_Y_RANA - 20), this);
+        this.contenedor = new Contenedor(this.space, cc.p(START_X_CARGA, START_Y_CARGA - 20), this);
 
     },
     teclaPulsada: function (keyCode, event) {
@@ -542,13 +544,13 @@ var GameLayer = cc.Layer.extend({
             }
         }
     },*/
-    colisionRanaConContenedor: function (arbiter, space) {
+    colisionCargaConContenedor: function (arbiter, space) {
         var shapes = arbiter.getShapes();
-        // shapes[0] es la rana
-        var formaRana = shapes[0];
-        if (this.rana.shape == formaRana) {
-            if (this.rana.body.x == this.contenedor.body.x)
-                this.rana.body.vx = this.contenedor.body.vx;
+        // shapes[0] es la carga
+        var formaCarga = shapes[0];
+        if (this.carga.shape == formaCarga) {
+            if (this.carga.body.x == this.contenedor.body.x)
+                this.carga.body.vx = this.contenedor.body.vx;
         }
     },
     colisionDisparoConEnemigo: function (arbiter, space) {

@@ -1,4 +1,4 @@
-var Rana = cc.Class.extend({
+var Cuervo = cc.Class.extend({
     space: null,
     sprite: null,
     shape: null,
@@ -10,7 +10,7 @@ var Rana = cc.Class.extend({
         // Crear animación
         var framesAnimacion = [];
         for (var i = 1; i <= 8; i++) {
-            var str = "rana" + i + ".png";
+            var str = "cuervo" + i + ".png";
             var frame = cc.spriteFrameCache.getSpriteFrame(str);
             framesAnimacion.push(frame);
         }
@@ -19,7 +19,7 @@ var Rana = cc.Class.extend({
             new cc.RepeatForever(new cc.Animate(animacion));
 
         // Crear Sprite - Cuerpo y forma
-        this.sprite = new cc.PhysicsSprite("#rana1.png");
+        this.sprite = new cc.PhysicsSprite("#cuervo1.png");
         // Cuerpo estática , no le afectan las fuerzas
         // Cuerpo dinámico, SI le afectan las fuerzas
         this.body = new cp.Body(5, Infinity);
