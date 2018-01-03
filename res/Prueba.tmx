@@ -33,12 +33,6 @@
   <object id="13" x="652" y="363" width="40" height="40"/>
  </objectgroup>
  <objectgroup name="Contenedor">
-  <object id="15" x="90" y="400">
-   <polyline points="0,0 0,-77"/>
-  </object>
-  <object id="16" x="210" y="400">
-   <polyline points="0,0 -1,-79"/>
-  </object>
   <object id="18" x="90" y="400">
    <polyline points="0,0 119,0"/>
   </object>

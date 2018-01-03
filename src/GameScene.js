@@ -8,7 +8,7 @@ var tipoDisparo = 7;
 var tipoSuelo = 8;
 var tipoRana = 9
 var tipoContenedor = 401;
-var tipoContenedorGirarDerecha = 400;
+var tipoContenedor = 400;
 var START_X_COCHE = 250;
 var START_Y_COCHE = 300;
 var START_X_RANA = 150;
@@ -150,7 +150,7 @@ var GameLayer = cc.Layer.extend({
             enemigo.moverAutomaticamente();
         }
 
-        console.log("Formas eliminar: " + this.formasEliminar.length);
+        //console.log("Formas eliminar: " + this.formasEliminar.length);
         // Eliminar formas:
         for (var i = 0; i < this.formasEliminar.length; i++) {
             var shape = this.formasEliminar[i];
@@ -164,7 +164,7 @@ var GameLayer = cc.Layer.extend({
 
             for (var r = 0; r < this.enemigos.length; r++) {
                 if (this.enemigos[r].shape == shape) {
-                    console.log("Enemigo eliminado");
+                    //console.log("Enemigo eliminado");
                     this.enemigos[r].eliminar();
                     this.enemigos.splice(r, 1);
                 }
@@ -303,6 +303,15 @@ var GameLayer = cc.Layer.extend({
             this.coche.body.vx = 200;
         }
 
+        if (this.rana.body.y > START_Y_RANA)
+            this.rana.body.vx = 0;
+
+        if(this.rana.body.x !== this.contenedor.x){
+            this.rana.body.vx = 0;
+        }
+
+        this.contenedor.body.vx = this.coche.body.vx;
+
     },
     cargarMapa: function () {
         this.mapa = new cc.TMXTiledMap(niveles[nivelActual]);
@@ -375,45 +384,45 @@ var GameLayer = cc.Layer.extend({
 
             this.cajas.push(caja);
         }
-        /*
-               var grupoEnemigos = this.mapa.getObjectGroup("Enemigos");
-               var enemigosArray = grupoEnemigos.getObjects();
-               for (var i = 0; i < enemigosArray.length; i++) {
-                   var enemigo = new Enemigo(this.space,
-                       cc.p(enemigosArray[i]["x"],enemigosArray[i]["y"]),
-                       this);
 
-                   this.enemigos.push(enemigo);
-                   console.log("Enemigo agregado");
-               }
+        var grupoEnemigos = this.mapa.getObjectGroup("Enemigos");
+        if (grupoEnemigos !== null) {
+            var enemigosArray = grupoEnemigos.getObjects();
+            for (var i = 0; i < enemigosArray.length; i++) {
+                var enemigo = new Enemigo(this.space,
+                    cc.p(enemigosArray[i]["x"], enemigosArray[i]["y"]),
+                    this);
 
-               var grupoContenedoresGirarDerecha = this.mapa.getObjectGroup("ContenedoresGirarDerecha");
-               var contenedoresGirarDerechaArray = grupoContenedoresGirarDerecha.getObjects();
-               for (var i = 0; i < contenedoresGirarDerechaArray.length; i++) {
-                   var contenedor = contenedoresGirarDerechaArray[i];
-                   var puntos = contenedor.polylinePoints;
+                this.enemigos.push(enemigo);
+                //console.log("Enemigo agregado");
+            }
+        }
 
-                   for(var j = 0; j < puntos.length - 1; j++){
-                       var bodyContenedor = new cp.StaticBody();
+        /*var grupoContenedores = this.mapa.getObjectGroup("Contenedor");
+        var contenedoresArray = grupoContenedores.getObjects();
+        for (var i = 0; i < contenedoresArray.length; i++) {
+            var contenedor = contenedoresArray[i];
+            var puntos = contenedor.polylinePoints;
 
-                       var shapeContenedor = new cp.SegmentShape(bodyContenedor,
-                           cp.v(parseInt(contenedor.x) + parseInt(puntos[j].x),
-                               parseInt(contenedor.y) - parseInt(puntos[j].y)),
-                           cp.v(parseInt(contenedor.x) + parseInt(puntos[j + 1].x),
-                               parseInt(contenedor.y) - parseInt(puntos[j + 1].y)),
-                           5);
+            for (var j = 0; j < puntos.length - 1; j++) {
+                var bodyContenedor = new cp.StaticBody();
 
-                       shapeContenedor.setSensor(true);
-                       shapeContenedor.setCollisionType(tipoContenedorGirarDerecha);
-                       shapeContenedor.setFriction(1);
+                var shapeContenedor = new cp.SegmentShape(bodyContenedor,
+                    cp.v(parseInt(contenedor.x) + parseInt(puntos[j].x),
+                        parseInt(contenedor.y) - parseInt(puntos[j].y)),
+                    cp.v(parseInt(contenedor.x) + parseInt(puntos[j + 1].x),
+                        parseInt(contenedor.y) - parseInt(puntos[j + 1].y)),
+                    5);
 
-                       this.space.addStaticShape(shapeContenedor);
-                   }
-               }
+                shapeContenedor.setSensor(true);
+                shapeContenedor.setCollisionType(tipoContenedor);
+                shapeContenedor.setFriction(1);
 
+                this.space.addStaticShape(shapeContenedor);
+            }
+        }*/
+        this.contenedor = new Contenedor(this.space, cc.p(START_X_RANA, START_Y_RANA - 20), this);
 
-              */
-        this.contenedor = new Contenedor(this.mapa, this.space, this);
     },
     teclaPulsada: function (keyCode, event) {
         var instancia = event.getCurrentTarget();
@@ -437,7 +446,7 @@ var GameLayer = cc.Layer.extend({
     },
     teclaLevantada: function (keyCode, event) {
         var instancia = event.getCurrentTarget();
-        console.log("Tecla Levantada " + keyCode);
+        //console.log("Tecla Levantada " + keyCode);
         // Flecha izquierda
         if (keyCode == 37) {
             instancia.teclaIzquierda = false;
@@ -537,7 +546,8 @@ var GameLayer = cc.Layer.extend({
         // shapes[0] es la rana
         var formaRana = shapes[0];
         if (this.rana.shape == formaRana) {
-            //this.rana.body.applyImpulse(cp.v(0, -this.rana.body.vx), cp.v(0, 0));
+            if (this.rana.body.x == this.contenedor.body.x)
+                this.rana.body.vx = this.contenedor.body.vx;
         }
     },
     colisionDisparoConEnemigo: function (arbiter, space) {

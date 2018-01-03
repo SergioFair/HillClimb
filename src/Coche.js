@@ -38,11 +38,10 @@ var Coche = cc.Class.extend({
         // agregar forma dinamica
         this.space.addShape(this.shape);
         this.shape.setCollisionType(tipoJugador);
-        // añadir sprite a la capa
-
         // ejecutar la animación
         this.sprite.runAction(actionAnimacionBucle);
 
+        // añadir sprite a la capa
         this.layer.addChild(this.sprite, 10);
 
         // Impulso inicial

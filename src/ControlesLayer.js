@@ -74,7 +74,7 @@ var ControlesLayer = cc.Layer.extend({
     actualizarGasolina: function () {
         console.log(this.barraGasolina.getPercent());
         porcentaje++;
-        if (porcentaje % 15 === 0) {
+        if (porcentaje % 25 === 0) {
             this.barraGasolina.setPercent(this.barraGasolina.getPercent() - 1);
         }
     },
@@ -96,10 +96,10 @@ var ControlesLayer = cc.Layer.extend({
         this.barraGasolina.setPercent(INITIAL_GAS);
     },
     incrementarGasolina: function () {
-        if (this.barraGasolina.getPercent() >= 75) {
+        if (this.barraGasolina.getPercent() >= 70) {
             this.barraGasolina.setPercent(100);
         } else {
-            this.barraGasolina.percent += 25;
+            this.barraGasolina.percent += 30;
         }
     },
     onMouseDown: function (event) {
