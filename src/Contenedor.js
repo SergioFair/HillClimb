@@ -34,7 +34,7 @@ var Contenedor = cc.Class.extend({
         // forma
         this.shape = new cp.BoxShape(this.body,
             this.sprite.getContentSize().width,
-            this.sprite.getContentSize().height);
+            this.sprite.getContentSize().height/2);
         this.shape.setFriction(1);
         // agregar forma dinamica
         this.space.addShape(this.shape);

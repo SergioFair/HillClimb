@@ -12,11 +12,14 @@ var tipoContenedor = 400;
 var START_X_COCHE = 250;
 var START_Y_COCHE = 300;
 var START_X_CARGA = 150;
-var START_Y_CARGA = 300;
+var START_Y_CARGA = 350;
 var GAS = "Te has quedado sin gasolina";
 var MINA = "Has chocado con una mina";
 var CAIDA = "Te has caído por el precipicio";
 var CARGA = "Has perdido la carga";
+var CUERVO = 1;
+var RANA = 2;
+var CONEJO = 3;
 
 //var niveles = [ res.mapa1_tmx , res.mapa2_tmx ];
 var niveles = [res.mapa_prueba];
@@ -84,7 +87,7 @@ var GameLayer = cc.Layer.extend({
                cc.p(100,250), this);*/
         this.coche = new Coche(this.space, cc.p(START_X_COCHE, START_Y_COCHE), this);
         //this.carga = new Rana(this.space, cc.p(START_X_CARGA, START_Y_CARGA), this);
-        this.carga = new Cuervo(this.space, cc.p(START_X_CARGA, START_Y_CARGA), this);
+        this.carga = new Carga(this.space, cc.p(START_X_CARGA, START_Y_CARGA), this, CUERVO);
 
         cc.eventManager.addListener({
             event: cc.EventListener.KEYBOARD,
@@ -424,7 +427,7 @@ var GameLayer = cc.Layer.extend({
                 this.space.addStaticShape(shapeContenedor);
             }
         }*/
-        this.contenedor = new Contenedor(this.space, cc.p(START_X_CARGA, START_Y_CARGA - 20), this);
+        this.contenedor = new Contenedor(this.space, cc.p(START_X_CARGA, START_Y_CARGA - 50), this);
 
     },
     teclaPulsada: function (keyCode, event) {

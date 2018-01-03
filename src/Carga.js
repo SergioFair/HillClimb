@@ -1,17 +1,30 @@
-var Cuervo = cc.Class.extend({
+var Carga = cc.Class.extend({
     space: null,
     sprite: null,
     shape: null,
     layer: null,
-    ctor: function (space, posicion, layer) {
+    animal: 0,
+    ctor: function (space, posicion, layer, animal) {
         this.space = space;
         this.layer = layer;
+        this.animal = animal
+        var str_animal;
+        switch (this.animal) {
+            case 1:
+                str_animal = "cuervo";
+                break;
+            case 2:
+                str_animal = "rana";
+                break;
+            case 3:
+                str_animal = "conejo";
+                break;
+        }
 
         // Crear animación
         var framesAnimacion = [];
         for (var i = 1; i <= 8; i++) {
-            var str = "cuervo" + i + ".png";
-            var frame = cc.spriteFrameCache.getSpriteFrame(str);
+            var frame = cc.spriteFrameCache.getSpriteFrame(str_animal+i+".png");
             framesAnimacion.push(frame);
         }
         var animacion = new cc.Animation(framesAnimacion, 0.2);
@@ -19,7 +32,7 @@ var Cuervo = cc.Class.extend({
             new cc.RepeatForever(new cc.Animate(animacion));
 
         // Crear Sprite - Cuerpo y forma
-        this.sprite = new cc.PhysicsSprite("#cuervo1.png");
+        this.sprite = new cc.PhysicsSprite("#" + str_animal + "1.png");
         // Cuerpo estática , no le afectan las fuerzas
         // Cuerpo dinámico, SI le afectan las fuerzas
         this.body = new cp.Body(5, Infinity);
@@ -52,7 +65,8 @@ var Cuervo = cc.Class.extend({
 
     },
     saltar: function () {
-        this.body.applyImpulse(cp.v(0, 1250), cp.v(0, 0));
+        var factor = 250 + 500 * this.animal;
+        this.body.applyImpulse(cp.v(0, factor), cp.v(0, 0));
     },
     eliminar: function () {
         // quita la forma
