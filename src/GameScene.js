@@ -64,6 +64,7 @@ var GameLayer = cc.Layer.extend({
         cc.spriteFrameCache.addSpriteFrames(res.animacion_cocodrilo_plist);
         cc.spriteFrameCache.addSpriteFrames(res.caja_plist);
         cc.spriteFrameCache.addSpriteFrames(res.rana_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.tabla_plist);
 
         // Inicializar Space
         this.space = new cp.Space();

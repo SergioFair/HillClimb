@@ -69,6 +69,8 @@ var res = {
     rana_plist : "res/rana.plist",
     tabla_h: "res/tabla_h.png",
     tabla_v: "res/tabla_v.png",
+    tabla_png : "res/tabla.png",
+    tabla_plist : "res/tabla.plist"
 };
 
 var g_resources = [];

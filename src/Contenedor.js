@@ -7,8 +7,19 @@ var Contenedor = cc.Class.extend({
         this.space = space;
         this.layer = layer;
 
-        //var str = "#tabla_h.png";
-        var str = "#caja1.png";
+        // Crear animación
+        var framesAnimacion = [];
+        for (var i = 1; i < 2; i++) {
+            var str = "tabla_h.png";
+            var frame = cc.spriteFrameCache.getSpriteFrame(str);
+            framesAnimacion.push(frame);
+        }
+        var animacion = new cc.Animation(framesAnimacion, 0.2);
+        var actionAnimacionBucle =
+            new cc.RepeatForever(new cc.Animate(animacion));
+        
+        var str = "#tabla_h.png";
+        //var str = "#caja1.png";
         this.sprite = new cc.PhysicsSprite(str);
 
         // Cuerpo dinámico, SI le afectan las fuerzas
