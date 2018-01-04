@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="20" tilewidth="32" tileheight="32" nextobjectid="19">
- <tileset firstgid="1" name="tiles32" tilewidth="32" tileheight="32" tilecount="98">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="20" tilewidth="32" tileheight="32" nextobjectid="20">
+ <tileset firstgid="1" name="tiles32" tilewidth="32" tileheight="32" tilecount="98" columns="14">
   <image source="tiles32.png" width="448" height="224"/>
  </tileset>
  <layer name="PatronesFondo" width="500" height="20">
@@ -36,5 +36,8 @@
   <object id="18" x="90" y="400">
    <polyline points="0,0 119,0"/>
   </object>
+ </objectgroup>
+ <objectgroup name="Powerups">
+  <object id="19" x="501" y="356" width="40" height="40"/>
  </objectgroup>
 </map>

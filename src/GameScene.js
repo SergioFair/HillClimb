@@ -6,7 +6,8 @@ var tipoMina = 5;
 var tipoCaja = 6;
 var tipoDisparo = 7;
 var tipoSuelo = 8;
-var tipoCarga = 9
+var tipoCarga = 9;
+var tipoPowerup = 10;
 var tipoContenedor = 401;
 var tipoContenedor = 400;
 var START_X_COCHE = 250;
@@ -41,6 +42,7 @@ var GameLayer = cc.Layer.extend({
     gasolina: [],
     minas: [],
     cajas: [],
+    powerups: [],
     contenedor: null,
     jugador: null,
     coche: null,
@@ -69,6 +71,7 @@ var GameLayer = cc.Layer.extend({
         cc.spriteFrameCache.addSpriteFrames(res.rana_plist);
         cc.spriteFrameCache.addSpriteFrames(res.animacion_cuervo_plist);
         cc.spriteFrameCache.addSpriteFrames(res.tabla_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.powerup_plist);
 
         // Inicializar Space
         this.space = new cp.Space();
@@ -114,6 +117,10 @@ var GameLayer = cc.Layer.extend({
         // jugador y caja
         this.space.addCollisionHandler(tipoJugador, tipoCaja,
             null, this.colisionJugadorConCaja.bind(this), null, null);
+
+        // jugador y powerup
+        this.space.addCollisionHandler(tipoJugador, tipoPowerup,
+            null, this.colisionJugadorConPowerup.bind(this), null, null);
 
         // enemigo y contenedor
         // IMPORTANTE: Invocamos el método antes de resolver la colisión (realmente no habrá colisión).
@@ -194,6 +201,13 @@ var GameLayer = cc.Layer.extend({
                 if (this.minas[r].shape == shape) {
                     this.minas[r].eliminar();
                     this.minas.splice(r, 1);
+                }
+            }
+
+            for (var r = 0; r < this.powerups.length; r++) {
+                if (this.powerups[r].shape == shape) {
+                    this.powerups[r].eliminar();
+                    this.powerups.splice(r, 1);
                 }
             }
 
@@ -404,6 +418,16 @@ var GameLayer = cc.Layer.extend({
             }
         }
 
+        var grupoPowerups = this.mapa.getObjectGroup("Powerups");
+        var powerupArray = grupoPowerups.getObjects();
+        for (var i = 0; i < powerupArray.length; i++) {
+            var powerup = new Powerup(this.space,
+                cc.p(powerupArray[i]["x"], powerupArray[i]["y"]),
+                this);
+
+            this.powerups.push(powerup);
+        }
+
         /*var grupoContenedores = this.mapa.getObjectGroup("Contenedor");
         var contenedoresArray = grupoContenedores.getObjects();
         for (var i = 0; i < contenedoresArray.length; i++) {
@@ -517,6 +541,17 @@ var GameLayer = cc.Layer.extend({
         this.getParent().addChild(new GameOverLayer(MINA));
         //capaControles.resetearMarcadores();
 
+    },
+    colisionJugadorConPowerup: function (arbiter, space) {
+
+        // Marcar el powerup para eliminarlo
+        var shapes = arbiter.getShapes();
+        // shapes[0] es el jugador
+        this.formasEliminar.push(shapes[1]);
+
+        this.tiempoEfecto = 100;
+
+        this.powerups[0].aumentarVelocidad(this.coche);
     },
     colisionJugadorConCaja: function (arbiter, space) {
         // Marcar la caja para eliminarla

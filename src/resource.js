@@ -70,7 +70,9 @@ var res = {
     tabla_h: "res/tabla_h.png",
     tabla_v: "res/tabla_v.png",
     tabla_png : "res/tabla.png",
-    tabla_plist : "res/tabla.plist"
+    tabla_plist : "res/tabla.plist",
+    powerup_png : "res/powerup.png",
+    powerup_plist : "res/powerup.plist"
 };
 
 var g_resources = [];

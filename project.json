@@ -25,6 +25,7 @@
         "src/GameOverLayer.js",
         "src/Caja.js",
         "src/Carga.js",
-        "src/Contenedor.js"
+        "src/Contenedor.js",
+        "src/Powerup.js"
     ]
 }

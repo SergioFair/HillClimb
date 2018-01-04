@@ -3,9 +3,12 @@ var Coche = cc.Class.extend({
     layer: null,
     sprite: null,
     shape: null,
+    aceleracionX: 0,
     ctor: function (space, posicion, layer) {
         this.space = space;
         this.layer = layer;
+
+        this.aceleracionX = 100;
 
         // Crear animación
         var framesAnimacion = [];
@@ -49,9 +52,12 @@ var Coche = cc.Class.extend({
 
     },
     moverDerecha: function () {
-        this.body.applyImpulse(cp.v(100, 0), cp.v(0, 0));
+        this.body.applyImpulse(cp.v(this.aceleracionX, 0), cp.v(0, 0));
     },
     moverIzquierda: function () {
-        this.body.applyImpulse(cp.v(-100, 0), cp.v(0, 0));
+        this.body.applyImpulse(cp.v(this.aceleracionX*-1, 0), cp.v(0, 0));
     },
+    setAceleracion: function () {
+        this.aceleracionX *= 2;
+    }
 });
