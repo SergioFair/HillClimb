@@ -50,6 +50,6 @@ ctor:function (space, posicion, layer) {
       // quita el sprite
       this.layer.removeChild(this.sprite);
    }, aumentarVelocidad: function (coche) {
-       coche.setAceleracion(150);
+       coche.setAceleracion(coche.getAceleracion()*2);
    }
 });

@@ -55,9 +55,12 @@ var Coche = cc.Class.extend({
         this.body.applyImpulse(cp.v(this.aceleracionX, 0), cp.v(0, 0));
     },
     moverIzquierda: function () {
-        this.body.applyImpulse(cp.v(this.aceleracionX*-1, 0), cp.v(0, 0));
+        this.body.applyImpulse(cp.v(this.aceleracionX * -1, 0), cp.v(0, 0));
     },
-    setAceleracion: function () {
-        this.aceleracionX *= 2;
+    setAceleracion: function (value) {
+        this.aceleracionX = value;
+    },
+    getAceleracion: function(){
+        return this.aceleracionX;
     }
 });
