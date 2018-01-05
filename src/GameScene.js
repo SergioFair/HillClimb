@@ -23,7 +23,7 @@ var RANA = 2;
 var CONEJO = 3;
 
 //var niveles = [ res.mapa1_tmx , res.mapa2_tmx ];
-var niveles = [res.mapa_prueba];
+var niveles = [res.mapa_prueba2];
 var nivelActual = 0;
 
 var GameLayer = cc.Layer.extend({

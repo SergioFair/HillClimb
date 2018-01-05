@@ -55,6 +55,8 @@ var res = {
     gas: "res/gas.png",
     gas_plist : "res/gas.plist",
     mapa_prueba: "res/Prueba.tmx",
+    mapa_prueba2 : "res/PruebaFinal1.tmx",
+    spritesheet : "res/spritesheet.png",
     flag_png : "res/flag.png",
     progressBar_png: "res/progressBar.png",
     animacion_mina_normal_png : "res/animacion_mina_normal.png",
@@ -72,7 +74,11 @@ var res = {
     tabla_png : "res/tabla.png",
     tabla_plist : "res/tabla.plist",
     powerup_png : "res/powerup.png",
-    powerup_plist : "res/powerup.plist"
+    powerup_plist : "res/powerup.plist",
+    seleccion_nivel_png : "res/seleccion_nivel.png",
+    nivel1_png : "res/nivel1.jpg",
+    nivel2_png : "res/nivel2.jpg",
+    nivel3_png : "res/nivel3.jpg"
 };
 
 var g_resources = [];

@@ -26,6 +26,7 @@
         "src/Caja.js",
         "src/Carga.js",
         "src/Contenedor.js",
-        "src/Powerup.js"
+        "src/Powerup.js",
+        "src/SeleccionNivelLayer.js"
     ]
 }

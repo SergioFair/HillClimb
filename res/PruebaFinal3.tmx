@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="20" tilewidth="32" tileheight="32" nextobjectid="80">
+ <tileset firstgid="1" name="spritesheet" tilewidth="32" tileheight="32" tilecount="8192" columns="128">
+  <image source="spritesheet.png" width="4096" height="2048"/>
+ </tileset>
+ <layer name="PatronesFondo" width="500" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztwzEJAAAMA7DKmH+ZvQrTkUB6SVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV1T+n69GI
+  </data>
+ </layer>
+ <layer name="PatronesTerreno" width="500" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt2/1OszAUgHH+GCHu42a2XTkQr88SRUst9OvA6fT5JSczb/LOismetcOmAQAAAAAAAAAAAAAAf8Fwzvt/41V2HQAAQEcNTZ/ej4xm7qemeZh5munNuoZrHesDAGBPuftyl2Yzp5/hcTENN9Objg9mRjP3m/l3M8+b3toAALDZ+89a96Baa5haPpgZzby3P9Objg9mxls91yhFf/afO6x9DQCom7v/dPegOU2X2pe7Spvp9iv0OHXsu+Vv/sm9Rpqmlt8v/nOHta8BAHVb23/Oe9BX7JWP79w89Dh1bNHv9vhrNL8HkTK3vN/4vfsGAKBrapi973TP1EOv6dK9cs/2fWsKSV3D3PLQXjs4kddIiv0eREJuy+k5AOiZuzk4+1H3TH3zdbz7HMleuWf7vjXFiG363i3fq+nuukuVtJyeA4AO+7PRxet2lzGtv+nFe2SBdoTWcFTL3aY/BO55X6y7K3uu0pbTcwAo5zuXDk3MOXrO5DY9peVS7Ti65fY1mu57tz9DSH1c/P6+3lflfs4h0XJ6DgDlfOfSoQmeows0PeVvr1NaLtUOjZYvrlPE/Xab9+G1zeKcJJdEy+k5AJTbq8ulTbf3oGsTe8/dVjt8z5n0PXM73sWvd9dxev48be/rJa4/PQcAeeo92ep64Jwg6p47T79svudM/p45e+0jeu7epxDR8/G0va8vvv70HAB2od1sjfnvP/+v6fSvBwCgjHpLlNuhvZYqhp4DwMtTb4lyO7TXUsXQcwB4eR/3F8z8
+  </data>
+ </layer>
+ <objectgroup name="Suelos">
+  <object id="20" x="0" y="415">
+   <polyline points="0,0 448,0"/>
+  </object>
+  <object id="21" x="0" y="0">
+   <polyline points="0,0 0,639"/>
+  </object>
+  <object id="40" x="448" y="416">
+   <polyline points="0,0 97,-96 320,-95 418,-192 552,-192 805,63 1121,64 1281,-96 1505,-96 1504,223"/>
+  </object>
+  <object id="41" x="2049" y="637">
+   <polyline points="0,0 0,-156 447,-157 672,-381 1022,-381 1120,-478 1221,-478 1475,-223 1984,-221 2112,-349 2111,0"/>
+  </object>
+  <object id="42" x="4224" y="638">
+   <polyline points="0,0 0,-158 417,-158 673,-414 960,-413 961,-638"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Monedas">
+  <object id="46" x="697" y="272" width="40" height="40"/>
+  <object id="47" x="794" y="202" width="40" height="40"/>
+  <object id="48" x="747" y="247" width="40" height="40"/>
+  <object id="49" x="1055" y="229" width="40" height="40"/>
+  <object id="50" x="1102" y="271" width="40" height="40"/>
+  <object id="51" x="1154" y="313" width="40" height="40"/>
+  <object id="52" x="1200" y="364" width="40" height="40"/>
+  <object id="53" x="1252" y="419" width="40" height="40"/>
+  <object id="56" x="1938" y="256" width="40" height="40"/>
+  <object id="57" x="2013" y="269" width="40" height="40"/>
+  <object id="58" x="2090" y="297" width="40" height="40"/>
+  <object id="59" x="2153" y="331" width="40" height="40"/>
+  <object id="60" x="2206" y="372" width="40" height="40"/>
+  <object id="61" x="2264" y="423" width="40" height="40"/>
+  <object id="68" x="4049" y="294" width="40" height="40"/>
+  <object id="69" x="4102" y="250" width="40" height="40"/>
+  <object id="70" x="4155" y="219" width="40" height="40"/>
+  <object id="71" x="4220" y="194" width="40" height="40"/>
+  <object id="72" x="4003" y="338" width="40" height="40"/>
+  <object id="74" x="4445" y="424" width="40" height="40"/>
+  <object id="75" x="4513" y="423" width="40" height="40"/>
+  <object id="76" x="4580" y="421" width="40" height="40"/>
+  <object id="77" x="4631" y="385" width="40" height="40"/>
+  <object id="78" x="4685" y="342" width="40" height="40"/>
+ </objectgroup>
+ <objectgroup name="Gasolina">
+  <object id="55" x="1359" y="431" width="40" height="40"/>
+  <object id="62" x="2755" y="198" width="40" height="40"/>
+  <object id="67" x="3725" y="366" width="40" height="40"/>
+ </objectgroup>
+ <objectgroup name="Minas">
+  <object id="54" x="2037" y="437" width="40" height="40"/>
+  <object id="65" x="3398" y="254" width="40" height="40"/>
+  <object id="73" x="4229" y="433" width="40" height="40"/>
+ </objectgroup>
+ <objectgroup name="Cajas">
+  <object id="43" x="893" y="172" width="40" height="40"/>
+  <object id="66" x="3203" y="111" width="40" height="40"/>
+  <object id="79" x="4889" y="176" width="40" height="40"/>
+ </objectgroup>
+ <objectgroup name="Contenedor">
+  <object id="18" x="90" y="400">
+   <polyline points="0,0 119,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Powerups">
+  <object id="45" x="580" y="266" width="40" height="40"/>
+  <object id="64" x="2416" y="425" width="40" height="40"/>
+ </objectgroup>
+</map>
