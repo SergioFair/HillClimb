@@ -50,11 +50,11 @@ var Carga = cc.Class.extend({
         // agregar forma dinamica
         this.space.addShape(this.shape);
         this.shape.setCollisionType(tipoCarga);
-        // añadir sprite a la capa
 
         // ejecutar la animación
         this.sprite.runAction(actionAnimacionBucle);
 
+        // añadir sprite a la capa
         this.layer.addChild(this.sprite, 10);
 
         var _this = this;
@@ -65,7 +65,7 @@ var Carga = cc.Class.extend({
 
     },
     saltar: function () {
-        var factor = 250 + 500 * this.animal;
+        var factor = 250 + 400 * this.animal++;
         this.body.applyImpulse(cp.v(0, factor), cp.v(0, 0));
     },
     eliminar: function () {

@@ -47,10 +47,6 @@ var Contenedor = cc.Class.extend({
         // quita la forma
         this.space.removeShape(this.shape);
 
-        // quita el cuerpo *opcional, funciona igual
-        // NO: es un cuerpo estático, no lo añadimos, no se puede quitar.
-        // this.space.removeBody(shape.getBody());
-
         // quita el sprite
         this.layer.removeChild(this.sprite);
     }

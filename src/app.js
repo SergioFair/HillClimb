@@ -1,11 +1,10 @@
-
 var MenuLayer = cc.Layer.extend({
-    ctor:function () {
+    ctor: function () {
         this._super();
         var size = cc.winSize;
 
         // Fondo
-        var spriteFondoTitulo= new cc.Sprite(res.menu_titulo_png);
+        var spriteFondoTitulo = new cc.Sprite(res.menu_titulo_png);
         // Asigno posición central
         spriteFondoTitulo.setPosition(cc.p(size.width / 2, size.height / 2));
         // Lo escalo porque es más pequeño que la pantalla
@@ -29,16 +28,16 @@ var MenuLayer = cc.Layer.extend({
 
 
         return true;
-    }, pulsarBotonJugar : function(){
-               cc.director.runScene(new SeleccionNivelLayer());
+    },
+    pulsarBotonJugar: function () {
+        cc.director.runScene(new SeleccionNivelLayer());
     }
 });
 
 var MenuScene = cc.Scene.extend({
-    onEnter:function () {
+    onEnter: function () {
         this._super();
         var layer = new MenuLayer();
         this.addChild(layer);
     }
 });
-

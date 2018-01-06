@@ -1,8 +1,8 @@
 var nivelElegido = 0;
 var SeleccionNivelLayer = cc.Layer.extend({
-    nivel1: null,
-    nivel2: null,
-    nivel3: null,
+    menu: null,
+    menu2: null,
+    menu3: null,
     ctor: function () {
         this._super();
         var size = cc.winSize;

@@ -72,7 +72,6 @@ var ControlesLayer = cc.Layer.extend({
         return true;
     },
     actualizarGasolina: function () {
-        console.log(this.barraGasolina.getPercent());
         porcentaje++;
         if (porcentaje % 25 === 0) {
             this.barraGasolina.setPercent(this.barraGasolina.getPercent() - 1);

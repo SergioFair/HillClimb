@@ -47,9 +47,6 @@ var Coche = cc.Class.extend({
         // añadir sprite a la capa
         this.layer.addChild(this.sprite, 10);
 
-        // Impulso inicial
-        //this.body.applyImpulse(cp.v(300, 0), cp.v(0, 0));
-
     },
     moverDerecha: function () {
         this.body.applyImpulse(cp.v(this.aceleracionX, 0), cp.v(0, 0));
