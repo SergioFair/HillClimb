@@ -27,6 +27,7 @@
         "src/Carga.js",
         "src/Contenedor.js",
         "src/Powerup.js",
-        "src/SeleccionNivelLayer.js"
+        "src/SeleccionNivelLayer.js",
+        "src/Meta.js"
     ]
 }

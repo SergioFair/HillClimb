@@ -8,6 +8,7 @@ var tipoDisparo = 7;
 var tipoSuelo = 8;
 var tipoCarga = 9;
 var tipoPowerup = 10;
+var tipoMeta = 11;
 var tipoContenedor = 401;
 var tipoContenedor = 400;
 var START_X_COCHE = 250;
@@ -19,8 +20,7 @@ var MINA = "Has chocado con una mina";
 var CAIDA = "Te has caído por el precipicio";
 var CARGA = "Has perdido la carga";
 
-//var niveles = [ res.mapa1_tmx , res.mapa2_tmx ];
-var niveles = [res.nivel1_tmx, res.nivel2_tmx, res.nivel3_tmx];
+var niveles = [ res.mapa1_tmx , res.mapa2_tmx , res.mapa3_tmx ];
 
 var GameLayer = cc.Layer.extend({
     monedas: 0,
@@ -39,6 +39,7 @@ var GameLayer = cc.Layer.extend({
     minas: [],
     cajas: [],
     powerups: [],
+    metas: [],
     contenedor: null,
     jugador: null,
     coche: null,
@@ -68,6 +69,7 @@ var GameLayer = cc.Layer.extend({
         cc.spriteFrameCache.addSpriteFrames(res.animacion_cuervo_plist);
         cc.spriteFrameCache.addSpriteFrames(res.tabla_plist);
         cc.spriteFrameCache.addSpriteFrames(res.powerup_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.bandera_plist);
 
         // Inicializar Space
         this.space = new cp.Space();
@@ -118,6 +120,10 @@ var GameLayer = cc.Layer.extend({
         // jugador y powerup
         this.space.addCollisionHandler(tipoJugador, tipoPowerup,
             null, this.colisionJugadorConPowerup.bind(this), null, null);
+
+        // jugador y meta
+        this.space.addCollisionHandler(tipoJugador, tipoMeta,
+            null, this.colisionJugadorConMeta.bind(this), null, null);
 
         // enemigo y contenedor
         // IMPORTANTE: Invocamos el método antes de resolver la colisión (realmente no habrá colisión).
@@ -212,6 +218,13 @@ var GameLayer = cc.Layer.extend({
                 if (this.cajas[r].shape == shape) {
                     this.cajas[r].eliminar();
                     this.cajas.splice(r, 1);
+                }
+            }
+
+            for (var r = 0; r < this.metas.length; r++) {
+                if (this.metas[r].shape == shape) {
+                    this.metas[r].eliminar();
+                    this.metas.splice(r, 1);
                 }
             }
         }
@@ -426,6 +439,16 @@ var GameLayer = cc.Layer.extend({
             this.powerups.push(powerup);
         }
 
+        var grupoMetas = this.mapa.getObjectGroup("Metas");
+        var metaArray = grupoMetas.getObjects();
+        for (var i = 0; i < metaArray.length; i++) {
+            var meta = new Meta(this.space,
+                cc.p(metaArray[i]["x"], metaArray[i]["y"]),
+                this);
+
+            this.metas.push(meta);
+        }
+
         /*var grupoContenedores = this.mapa.getObjectGroup("Contenedor");
         var contenedoresArray = grupoContenedores.getObjects();
         for (var i = 0; i < contenedoresArray.length; i++) {
@@ -550,6 +573,17 @@ var GameLayer = cc.Layer.extend({
         this.tiempoEfecto = 100;
 
         this.powerups[0].aumentarVelocidad(this.coche);
+    },
+    colisionJugadorConMeta: function (arbiter, space) {
+
+        // Marcar el powerup para eliminarlo
+        var shapes = arbiter.getShapes();
+        // shapes[0] es el jugador
+        this.formasEliminar.push(shapes[1]);
+
+        this.tiempoEfecto = 100;
+
+        this.metas[0].ganarNivel();
     },
     colisionJugadorConCaja: function (arbiter, space) {
         // Marcar la caja para eliminarla
