@@ -10,13 +10,13 @@ var Carga = cc.Class.extend({
         this.animal = animal
         var str_animal;
         switch (this.animal) {
-            case 1:
+            case 0:
                 str_animal = "cuervo";
                 break;
-            case 2:
+            case 1:
                 str_animal = "rana";
                 break;
-            case 3:
+            case 2:
                 str_animal = "conejo";
                 break;
         }

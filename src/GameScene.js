@@ -18,13 +18,9 @@ var GAS = "Te has quedado sin gasolina";
 var MINA = "Has chocado con una mina";
 var CAIDA = "Te has caído por el precipicio";
 var CARGA = "Has perdido la carga";
-var CUERVO = 1;
-var RANA = 2;
-var CONEJO = 3;
 
 //var niveles = [ res.mapa1_tmx , res.mapa2_tmx ];
-var niveles = [res.mapa_prueba2];
-var nivelActual = 0;
+var niveles = [res.nivel1_tmx, res.nivel2_tmx, res.nivel3_tmx];
 
 var GameLayer = cc.Layer.extend({
     monedas: 0,
@@ -48,13 +44,13 @@ var GameLayer = cc.Layer.extend({
     coche: null,
     carga: null,
     space: null,
-    ctor: function () {
+    nivelElegido: 0,
+    ctor: function (level) {
         this._super();
         var size = cc.winSize;
 
         cc.spriteFrameCache.addSpriteFrames(res.playershootright_plist);
         cc.spriteFrameCache.addSpriteFrames(res.disparo_plist);
-        cc.spriteFrameCache.addSpriteFrames(res.animacion_cuervo_plist);
         cc.spriteFrameCache.addSpriteFrames(res.moneda_plist);
         cc.spriteFrameCache.addSpriteFrames(res.playerrunright_plist);
         cc.spriteFrameCache.addSpriteFrames(res.playerjumpright_plist);
@@ -76,6 +72,7 @@ var GameLayer = cc.Layer.extend({
         // Inicializar Space
         this.space = new cp.Space();
         this.space.gravity = cp.v(0, -350);
+        this.nivelElegido = SeleccionNivelLayer.prototype.getNivelElegido();
 
         // Depuración
         //this.depuracion = new cc.PhysicsDebugNode(this.space);
@@ -90,7 +87,7 @@ var GameLayer = cc.Layer.extend({
                cc.p(100,250), this);*/
         this.coche = new Coche(this.space, cc.p(START_X_COCHE, START_Y_COCHE), this);
         //this.carga = new Rana(this.space, cc.p(START_X_CARGA, START_Y_CARGA), this);
-        this.carga = new Carga(this.space, cc.p(START_X_CARGA, START_Y_CARGA), this, CUERVO);
+        this.carga = new Carga(this.space, cc.p(START_X_CARGA, START_Y_CARGA), this, this.nivelElegido);
 
         cc.eventManager.addListener({
             event: cc.EventListener.KEYBOARD,
@@ -152,10 +149,10 @@ var GameLayer = cc.Layer.extend({
         var capaControles =
             this.getParent().getChildByTag(idCapaControles);
 
-        if (capaControles.monedas >= 40) {
-            nivelActual = nivelActual + 1;
+        /*if (capaControles.monedas >= 40) {
+            nivelElegido = nivelElegido + 1;
             cc.director.runScene(new GameScene());
-        }
+        }*/
 
         // Mover enemigos:
         for (var i = 0; i < this.enemigos.length; i++) {
@@ -233,7 +230,7 @@ var GameLayer = cc.Layer.extend({
             this.getParent().addChild(new GameOverLayer(CAIDA));
         }
 
-        if (this.carga.body.p.y < -100) {
+        if (this.carga.body.p.x < this.coche.body.p.x - 700 || this.carga.body.p.x > this.coche.body.p.x + 700) {
             this.getParent().addChild(new GameOverLayer(CARGA));
         }
 
@@ -315,26 +312,27 @@ var GameLayer = cc.Layer.extend({
             this.jugador.body.vx = 200;
         }*/
 
-        if (this.coche.body.vx < -200) {
-            this.coche.body.vx = -200;
+        if (this.coche.body.vx < -this.coche.getAceleracion()) {
+            this.coche.body.vx = -this.coche.getAceleracion();
         }
 
-        if (this.coche.body.vx > 200) {
-            this.coche.body.vx = 200;
+        if (this.coche.body.vx > this.coche.getAceleracion()) {
+            this.coche.body.vx = this.coche.getAceleracion();
         }
 
         if (this.carga.body.y > START_Y_CARGA)
             this.carga.body.vx = 0;
 
-        if(this.carga.body.x !== this.contenedor.x){
+        if (this.carga.body.x !== this.contenedor.x) {
             this.carga.body.vx = 0;
         }
 
         this.contenedor.body.vx = this.coche.body.vx;
+        this.contenedor.body.y = this.coche.body.y - 50;
 
     },
     cargarMapa: function () {
-        this.mapa = new cc.TMXTiledMap(niveles[nivelActual]);
+        this.mapa = new cc.TMXTiledMap(niveles[this.nivelElegido]);
         // Añadirlo a la Layer
         this.addChild(this.mapa);
         // Ancho del mapa
