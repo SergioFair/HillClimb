@@ -30,8 +30,6 @@ var res = {
     wheel_6: "res/wheel_6.png",
     orc_car_png: "res/orc_car.png",
     orc_car_plist: "res/orc_car.plist",
-    gas_pedal: "res/gas_pedal.png",
-    brake_pedal: "res/brake_pedal.png",
     gas_tank: "res/gas_tank.png",
     gas: "res/gas.png",
     gas_plist : "res/gas.plist",

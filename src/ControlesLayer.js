@@ -5,8 +5,6 @@ var ControlesLayer = cc.Layer.extend({
     etiquetaMonedas: null,
     monedas: 0,
     metros: 0,
-    spriteBotonAcelerar: null,
-    spriteBotonFrenar: null,
     spriteMarcadorMonedas: null,
     spriteBanderaMeta: null,
     spriteBidonGasolina: null,
@@ -15,20 +13,6 @@ var ControlesLayer = cc.Layer.extend({
     ctor: function () {
         this._super();
         var size = cc.winSize;
-
-        // BotonAcelerar
-        this.spriteBotonAcelerar = cc.Sprite.create(res.gas_pedal);
-        this.spriteBotonAcelerar.setPosition(
-            cc.p(size.width * 0.85, size.height * 0.15));
-
-        this.addChild(this.spriteBotonAcelerar);
-
-        // BotonFrenar
-        this.spriteBotonFrenar = cc.Sprite.create(res.brake_pedal);
-        this.spriteBotonFrenar.setPosition(
-            cc.p(size.width * 0.15, size.height * 0.15));
-
-        this.addChild(this.spriteBotonFrenar);
 
         // Contador Monedas
         this.spriteMarcadorMonedas = cc.Sprite.create(res.moneda1_png);
@@ -99,43 +83,6 @@ var ControlesLayer = cc.Layer.extend({
             this.barraGasolina.setPercent(100);
         } else {
             this.barraGasolina.percent += 30;
-        }
-    },
-    onMouseDown: function (event) {
-        this.mouseDown = true;
-        if (!this.mouseDown)
-            return;
-        else {
-            intervalo = setInterval(function () {
-                var instancia = event.getCurrentTarget();
-                var areaBotonAcelerar = instancia.spriteBotonAcelerar.getBoundingBox();
-                var areaBotonFrenar = instancia.spriteBotonFrenar.getBoundingBox();
-                var posicionXEvento = event.getLocationX(),
-                    posicionYEvento = event.getLocationY();
-
-                // La pulsación cae dentro del botón
-                if (cc.rectContainsPoint(areaBotonAcelerar,
-                        cc.p(posicionXEvento, posicionYEvento))) {
-
-                    // Accedemos al padre (Scene), pedimos la capa con la idCapaJuego
-                    var gameLayer = instancia.getParent().getChildByTag(idCapaJuego);
-                    // tenemos el objeto GameLayer
-                    gameLayer.coche.moverDerecha();
-
-                } else if (cc.rectContainsPoint(areaBotonFrenar, cc.p(posicionXEvento, posicionYEvento))) {
-
-                    // Accedemos al padre (Scene), pedimos la capa con la idCapaJuego
-                    var gameLayer = instancia.getParent().getChildByTag(idCapaJuego);
-                    // tenemos el objeto GameLayer
-                    gameLayer.coche.moverIzquierda();
-                }
-            }, 1);
-        }
-    },
-    onMouseUp: function () {
-        if (intervalo != null) {
-            this.mouseDown = false;
-            clearInterval(intervalo)
         }
     },
     getBarraGasolina() {
