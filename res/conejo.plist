@@ -125,7 +125,7 @@
 			<key>size</key>
 			<string>{256,256}</string>
 			<key>textureFileName</key>
-			<string>sprites.png</string>
+			<string>conejo.png</string>
 			</dict>
 		</dict>
 </plist>

@@ -18,15 +18,13 @@ var MINA = "Has chocado con una mina";
 var CAIDA = "Te has caído por el precipicio";
 var CARGA = "Has perdido la carga";
 
-var niveles = [ res.mapa1_tmx , res.mapa2_tmx , res.mapa3_tmx ];
+var niveles = [res.mapa1_tmx, res.mapa2_tmx, res.mapa3_tmx];
 
 var GameLayer = cc.Layer.extend({
     monedas: 0,
     formasEliminar: [],
     teclaIzquierda: false,
     teclaDerecha: false,
-    teclaArriba: false,
-    teclaBarra: false,
     monedas: [],
     gasolina: [],
     minas: [],
@@ -49,6 +47,7 @@ var GameLayer = cc.Layer.extend({
         cc.spriteFrameCache.addSpriteFrames(res.animacion_mina_explota_plist);
         cc.spriteFrameCache.addSpriteFrames(res.caja_plist);
         cc.spriteFrameCache.addSpriteFrames(res.rana_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.conejo_plist);
         cc.spriteFrameCache.addSpriteFrames(res.animacion_cuervo_plist);
         cc.spriteFrameCache.addSpriteFrames(res.tabla_plist);
         cc.spriteFrameCache.addSpriteFrames(res.powerup_plist);
@@ -345,14 +344,6 @@ var GameLayer = cc.Layer.extend({
         if (keyCode == 39) {
             instancia.teclaDerecha = true;
         }
-        // Flecha arriba
-        if (keyCode == 38) {
-            instancia.teclaArriba = true;
-        }
-        // Barra espaciadora
-        if (keyCode == 32) {
-            instancia.teclaBarra = true;
-        }
     },
     teclaLevantada: function (keyCode, event) {
         var instancia = event.getCurrentTarget();
@@ -363,14 +354,6 @@ var GameLayer = cc.Layer.extend({
         // Flecha derecha
         if (keyCode == 39) {
             instancia.teclaDerecha = false;
-        }
-        // Flecha arriba
-        if (keyCode == 38) {
-            instancia.teclaArriba = false;
-        }
-        // Barra espaciadora
-        if (keyCode == 32) {
-            instancia.teclaBarra = false;
         }
     },
     colisionJugadorConMoneda: function (arbiter, space) {

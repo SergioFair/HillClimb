@@ -46,6 +46,8 @@ var res = {
     caja_plist: "res/caja.plist",
     rana_png: "res/rana.png",
     rana_plist: "res/rana.plist",
+    conejo_png: "res/conejo.png",
+    conejo_plist: "res/conejo.plist",
     tabla_h: "res/tabla_h.png",
     tabla_png : "res/tabla.png",
     tabla_plist : "res/tabla.plist",
