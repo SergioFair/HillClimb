@@ -8,6 +8,7 @@ var res = {
     tiles32_png: "res/tiles32.png",
     mapa1_tmx: "res/mapa1.tmx",
     mapa2_tmx: "res/mapa2.tmx",
+    mapa3_tmx: "res/mapa3.tmx",
     moneda_png : "res/moneda.png",
     moneda_plist : "res/moneda.plist",
     moneda1_png : "res/moneda1.png",
@@ -54,8 +55,6 @@ var res = {
     gas_tank: "res/gas_tank.png",
     gas: "res/gas.png",
     gas_plist : "res/gas.plist",
-    mapa_prueba: "res/Prueba.tmx",
-    mapa_prueba2 : "res/PruebaFinal1.tmx",
     spritesheet : "res/spritesheet.png",
     flag_png : "res/flag.png",
     progressBar_png: "res/progressBar.png",
@@ -78,7 +77,9 @@ var res = {
     seleccion_nivel_png : "res/seleccion_nivel.png",
     nivel1_png : "res/nivel1.jpg",
     nivel2_png : "res/nivel2.jpg",
-    nivel3_png : "res/nivel3.jpg"
+    nivel3_png : "res/nivel3.jpg",
+    bandera_png : "res/bandera.png",
+    bandera_plist : "res/bandera.plist"
 };
 
 var g_resources = [];
