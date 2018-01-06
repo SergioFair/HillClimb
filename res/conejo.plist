@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>frames</key>
+		<dict>
+			<key>conejo1.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{61,0},{60,97}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{60,97}}</string>
+				<key>sourceSize</key>
+				<string>{60,97}</string>
+			</dict>
+
+			<key>conejo2.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{122,0},{60,76}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{60,76}}</string>
+				<key>sourceSize</key>
+				<string>{60,76}</string>
+			</dict>
+
+			<key>conejo3.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{61,172},{60,62}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{60,62}}</string>
+				<key>sourceSize</key>
+				<string>{60,62}</string>
+			</dict>
+
+			<key>conejo4.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{61,98},{60,73}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{60,73}}</string>
+				<key>sourceSize</key>
+				<string>{60,73}</string>
+			</dict>
+
+			<key>conejo5.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{122,77},{60,72}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{60,72}}</string>
+				<key>sourceSize</key>
+				<string>{60,72}</string>
+			</dict>
+
+			<key>conejo6.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,149},{60,76}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{60,76}}</string>
+				<key>sourceSize</key>
+				<string>{60,76}</string>
+			</dict>
+
+			<key>conejo7.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,82},{60,66}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{60,66}}</string>
+				<key>sourceSize</key>
+				<string>{60,66}</string>
+			</dict>
+
+			<key>conejo8.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,0},{60,81}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{60,81}}</string>
+				<key>sourceSize</key>
+				<string>{60,81}</string>
+			</dict>
+
+		</dict>
+
+		<key>metadata</key>
+		<dict>
+			<key>format</key>
+			<integer>2</integer>
+			<key>size</key>
+			<string>{256,256}</string>
+			<key>textureFileName</key>
+			<string>sprites.png</string>
+			</dict>
+		</dict>
+</plist>
